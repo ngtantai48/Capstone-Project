@@ -14,6 +14,7 @@
             <th>Firstname</th>
             <th>Lastname</th>
             <th>Address</th>
+            <th>Action</th>
         </tr>
 
         <% for(let i=0; i < dataTable.length; i++) { %>
@@ -30,12 +31,36 @@
                 <td>
                     <%= dataTable[i].address %>
                 </td>
+                <td>
+                    <a href="/edit-crud?id=<%= dataTable[i].id %>" class="btn-edit" type="button">Edit</a>
+                    <a class="btn-delete" type="button">Delete</a>
+                </td>
             </tr>
             <% } %>
     </table>
 </body>
 
 <style>
+    .btn-edit {
+        background-color: orange;
+        outline: none;
+        border: none;
+        height: 25px;
+        width: 60px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-delete {
+        background-color: #ff0023;
+        outline: none;
+        border: none;
+        height: 25px;
+        width: 60px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
     table,
     th,
     td {
