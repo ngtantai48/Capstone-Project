@@ -16,7 +16,7 @@ class Login extends Component {
             <div className='login-background'>
                 <div className='login-container'>
                     <div className='login-content row'>
-                        <div className='col-12 text-login'>Login Form</div>
+                        <div className='col-12 text-login'>Sign In</div>
                         <div className='col-12 form-group login-input'>
                             <label>Username: </label>
                             <input type='text' className='form-control' placeholder='Enter your username'></input>
@@ -25,8 +25,8 @@ class Login extends Component {
                             <label>Password: </label>
                             <input type='password' className='form-control' placeholder='Enter your password'></input>
                         </div>
-                        <div className='col-12'>
-                            <button className='btn-login'>Log in</button>
+                        <div className='col-12 text-center'>
+                            <button className='btn-login'>Log In</button>
                         </div>
                         <div className='col-12'>
                             <span className='forgot-password'>Forgot your password?</span>

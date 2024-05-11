@@ -1,22 +1,17 @@
 .login-background {
+    display: flex;
     justify-content: center;
     align-items: center;
-    display: flex;
     height: 100vh;
     background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
 
     .login-container {
         width: 400px;
-        // height: 100%;
-        margin: 0 auto;
         border-radius: 15px;
         background-color: white;
-        // align-items: center;
-        justify-content: center;
+        padding: 20px;
 
         .login-content {
-            padding: 15px;
-
             .text-login {
                 text-align: center;
                 font-weight: 600;
@@ -29,14 +24,22 @@
             }
 
             .btn-login {
-                width: 100%;
+                width: 30%;
                 margin: 10px 0;
-                height: 30px;
-                border-radius: 15px;
+                height: 40px;
+                border-radius: 20px;
                 outline: none;
                 border: none;
                 color: white;
                 background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+                transition: background 0.3s ease; // Hiệu ứng hover
+                cursor: pointer;
+                font-weight: 700;
+
+                &:hover {
+                    font-weight: 900;
+                    background: linear-gradient(135deg, rgba(253, 187, 45, 1) 0%, rgba(34, 193, 195, 1) 100%);
+                }
             }
 
             .forgot-password {
@@ -45,35 +48,34 @@
 
             .social-login {
                 display: flex;
-                text-align: center;
                 justify-content: center;
                 margin-top: 10px;
                 gap: 30px;
 
-                .google {
+                .google,
+                .facebook {
                     font-size: 30px;
-                    background: #f16767;
                     border-radius: 50%;
                     height: 50px;
                     width: 50px;
                     display: flex;
                     align-items: center;
-                    align-items: center;
                     justify-content: center;
                     color: white;
+                    transition: background 0.3s ease; // Hiệu ứng hover
+                    cursor: pointer;
+
+                    &:hover {
+                        filter: brightness(1.3); // Tăng độ sáng khi hover
+                    }
+                }
+
+                .google {
+                    background: #f16767;
                 }
 
                 .facebook {
-                    font-size: 30px;
                     background: #307aff;
-                    border-radius: 50%;
-                    height: 50px;
-                    width: 50px;
-                    display: flex;
-                    align-items: center;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
                 }
             }
         }
