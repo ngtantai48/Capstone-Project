@@ -31,9 +31,10 @@ const middleware = [
     createStateSyncMiddleware(reduxStateSyncConfig),
 ];
 
-if (isDevelopment) {
-    middleware.push(logger);
-}
+// if (isDevelopment) {
+//     const { logger } = require('redux-logger');
+//     middleware.push(logger);
+// }
 
 const composeEnhancers = (isDevelopment && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
