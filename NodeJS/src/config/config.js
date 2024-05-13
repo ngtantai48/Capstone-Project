@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+process.env.TZ = '+07:00';
+
 module.exports = {
   development: {
     username: process.env.DB_USERNAME,
@@ -7,7 +9,10 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: 'mysql',
-    logging: false
+    logging: false,
+    query: {
+      raw: true
+    }
   },
   test: {
     username: process.env.DB_USERNAME,

@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs';
 import db from "../models";
-import { raw } from 'body-parser';
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -97,6 +96,7 @@ let deleteUserById = (userId) => {
             let user = await db.User.findOne({
                 where: { id: userId }
             })
+            console.log(user)
 
             if (user) {
                 await user.destroy();
