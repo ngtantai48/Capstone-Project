@@ -5,24 +5,22 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 
 import appReducer from './appReducer';
-import adminReducer from './adminReducer';
 import userReducer from './userReducer';
 
 const persistCommonConfig = {
-    storage,
+    storage: storage,
     stateReconciler: autoMergeLevel2,
 };
 
-const adminPersistConfig = {
+const userPersistConfig = {
     ...persistCommonConfig,
-    key: 'admin',
-    whitelist: ['isLoggedIn', 'adminInfo'],
+    key: 'user',
+    whitelist: ['isLoggedIn', 'userInfo'],
 };
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
-    admin: persistReducer(adminPersistConfig, adminReducer),
-    user: userReducer,
+    user: persistReducer(userPersistConfig, userReducer),
     app: appReducer,
 });
 

@@ -53,6 +53,11 @@
                     font-weight: 900;
                     background: linear-gradient(135deg, rgba(253, 187, 45, 1) 0%, rgba(34, 193, 195, 1) 100%);
                 }
+
+                &:active {
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                    transform: scale(1.05);
+                }
             }
 
             .forgot-password {
