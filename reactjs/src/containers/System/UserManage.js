@@ -24,7 +24,7 @@ class UserManage extends Component {
     /** Life cycle
      * Run component: 
      * 1. Run constructor -> init state 
-     * 2. DidMount (set state) // set gia tri truoc khi render ra man hinhn 
+     * 2. DidMount (set state) //  chạy sau render lần đầu tiên, WillMount chay truoc khi render
      * 3. render
      */
 
@@ -38,18 +38,20 @@ class UserManage extends Component {
                 </div>
                 <div className='users-table mt-4 mx-2'>
                     <table id="customers">
-                        <tr>
-                            <th>Email</th>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Address</th>
-                            <th>Actions</th>
-                        </tr>
-                        {
-                            arrUsers && arrUsers.map((item, index) => {
-                                console.log('check map: ', item, index)
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {arrUsers && arrUsers.map((item, index) => {
+                                console.log('check map: ', item, index);
                                 return (
-                                    <tr>
+                                    <tr key={index}>
                                         <td>{item.email}</td>
                                         <td>{item.firstName}</td>
                                         <td>{item.lastName}</td>
@@ -59,9 +61,9 @@ class UserManage extends Component {
                                             <button className='btn-delete'><i className="fa-solid fa-trash-can"></i></button>
                                         </td>
                                     </tr>
-                                )
-                            })
-                        }
+                                );
+                            })}
+                        </tbody>
                     </table>
                 </div>
             </div>
