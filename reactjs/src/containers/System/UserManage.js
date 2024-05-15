@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers, createNewUserService, deleteUserService } from '../../services/userService';
+import { getAllUsers, createNewUserService, deleteUserService, EditUserService } from '../../services/userService';
 import ModalUser from './ModalUser';
+import ModalEditUser from './ModalEditUser';
 import { emitter } from '../../utils/emitter';
 class UserManage extends Component {
 
@@ -11,7 +11,11 @@ class UserManage extends Component {
         super(props);
         this.state = {
             arrUsers: [],
-            isOpenModalUser: false
+            isOpenModalUser: false,
+            isOpenModalEditUser: false,
+            userEdit: {
+
+            }
         }
     }
 
@@ -40,6 +44,12 @@ class UserManage extends Component {
         })
     }
 
+    toggleUserEditModal = () => {
+        this.setState({
+            isOpenModalEditUser: !this.state.isOpenModalEditUser
+        })
+    }
+
     createNewUser = async (data) => {
         try {
             let response = await createNewUserService(data);
@@ -57,18 +67,45 @@ class UserManage extends Component {
         }
     }
 
-    handleDeleteUser = async (user) => {
-        console.log('click delete', user)
+    handleEditUser = async (user) => {
+        // console.log('check edit user ', user)
+        this.setState({
+            isOpenModalEditUser: true,
+            userEdit: user
+        })
+    }
+
+    doEditUser = async (user) => {
         try {
-            let res = await deleteUserService(user.id);
+            let res = await EditUserService(user);
             if (res && res.errCode === 0) {
-                console.log(res.errMessage)
+                this.setState({
+                    isOpenModalEditUser: false
+                })
                 await this.getAllUsersFromReact()
             } else {
-                alert(res.errMessage)
+                alert(res.errCode, res.errMessage)
             }
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    handleDeleteUser = async (user) => {
+        // console.log('click delete', user)
+        const isConfirmed = window.confirm(`Are you sure you want to delete user ${user.email}?`);
+        if (isConfirmed) {
+            try {
+                let res = await deleteUserService(user.id);
+                if (res && res.errCode === 0) {
+                    console.log(res.errMessage)
+                    await this.getAllUsersFromReact()
+                } else {
+                    alert(res.errMessage)
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
@@ -84,10 +121,19 @@ class UserManage extends Component {
         return (
             <div className="users-container">
                 <ModalUser
-                    toggleFromParent={this.toggleUserModal}
                     isOpen={this.state.isOpenModalUser}
-                    createNewUser={this.createNewUser}>
-                </ModalUser>
+                    toggleFromParent={this.toggleUserModal}
+                    createNewUser={this.createNewUser}
+                ></ModalUser>
+                {this.state.isOpenModalEditUser &&
+                    <ModalEditUser
+                        isOpen={this.state.isOpenModalEditUser}
+                        toggleFromParent={this.toggleUserEditModal}
+                        currentUser={this.state.userEdit}
+                        editUser={this.doEditUser}
+                    ></ModalEditUser>
+                }
+
                 <div className='title text-center'>
                     Manage users with Ngtantai
                 </div>
@@ -99,8 +145,9 @@ class UserManage extends Component {
                         <thead>
                             <tr>
                                 <th>Email</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Phone Number</th>
                                 <th>Address</th>
                                 <th>Actions</th>
                             </tr>
@@ -112,9 +159,10 @@ class UserManage extends Component {
                                         <td>{item.email}</td>
                                         <td>{item.firstName}</td>
                                         <td>{item.lastName}</td>
+                                        <td>{item.phoneNumber}</td>
                                         <td>{item.address}</td>
                                         <td>
-                                            <button className='btn-edit'><i className="fa-solid fa-pencil"></i></button>
+                                            <button className='btn-edit' onClick={() => { this.handleEditUser(item) }}><i className="fa-solid fa-pencil"></i></button>
                                             <button className='btn-delete' onClick={() => { this.handleDeleteUser(item) }}><i className="fa-solid fa-trash-can"></i></button>
                                         </td>
                                     </tr>

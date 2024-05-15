@@ -24,12 +24,16 @@
                     <label for="inputLastname" class="form-label">Last name</label>
                     <input value="<%= user.lastName %>" type="text" class="form-control" name="lastName">
                 </div>
-                <div class="col-12">
+                <div class="col-6">
+                    <label for="inputPhonenumber" class="form-label">Phone number</label>
+                    <input value="<%= user.phoneNumber%>" type="text" class="form-control" name="phoneNumber">
+                </div>
+                <div class="col-6">
                     <label for="inputAddress" class="form-label">Address</label>
                     <input value="<%= user.address %>" type="text" class="form-control" name="address">
                 </div>
                 <div><input name="id" value="<%= user.id %>" type="text" hidden></div>
-                <div class="col-12">
+                <div class="col-6">
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>

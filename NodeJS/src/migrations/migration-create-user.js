@@ -21,10 +21,10 @@ module.exports = {
             lastName: {
                 type: Sequelize.STRING
             },
-            address: {
+            phoneNumber: {
                 type: Sequelize.STRING
             },
-            phonenumber: {
+            address: {
                 type: Sequelize.STRING
             },
             gender: {

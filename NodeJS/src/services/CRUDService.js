@@ -12,8 +12,8 @@ let createNewUser = async (data) => {
                 password: hashPasswordFromBcrypt,
                 firstName: data.firstName,
                 lastName: data.lastName,
+                phoneNumber: data.phoneNumber,
                 address: data.address,
-                phonenumber: data.phonenumber,
                 gender: data.gender === '1' ? true : false,
                 roleId: data.roleId,
             })
@@ -77,6 +77,7 @@ let updateUserData = (data) => {
             if (user) {
                 user.firstName = data.firstName;
                 user.lastName = data.lastName;
+                user.phoneNumber = data.phoneNumber;
                 user.address = data.address;
 
                 await user.save();
