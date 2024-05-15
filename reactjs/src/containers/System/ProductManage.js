@@ -7,9 +7,7 @@ class ProductManage extends Component {
 
     }
 
-    componentDidMount() {
-    }
-
+    componentDidMount() { }
 
     render() {
         return (
@@ -20,13 +18,11 @@ class ProductManage extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-    };
+    return {};
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductManage);

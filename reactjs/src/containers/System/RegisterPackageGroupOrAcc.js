@@ -8,10 +8,7 @@ class RegisterPackageGroupOrAcc extends Component {
         this.state = {
 
         }
-
     }
-
-
 
     render() {
         return (
@@ -19,18 +16,14 @@ class RegisterPackageGroupOrAcc extends Component {
                 register package group or account
             </div>)
     }
-
 }
 
 const mapStateToProps = state => {
-    return {
-
-    };
+    return {};
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPackageGroupOrAcc);

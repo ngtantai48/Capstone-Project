@@ -5,9 +5,9 @@ module.exports = {
         await queryInterface.createTable('Schedules', {
             id: {
                 allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4
             },
             currentNumber: {
                 type: Sequelize.INTEGER
