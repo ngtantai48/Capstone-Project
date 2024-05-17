@@ -3,23 +3,23 @@ import { connect } from 'react-redux';
 import { push } from "connected-react-router";
 import * as actions from "../../store/actions";
 import './Login.scss';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { handleLoginApi } from '../../services/userService';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: '',
       isShowPassword: false,
       errMessage: ''
     }
   }
 
-  handleOnChangeUsername = (event) => {
+  handleOnChangeEmail = (event) => {
     this.setState({
-      username: event.target.value
+      email: event.target.value
     })
     // console.log(event.target.value)
   }
@@ -36,7 +36,7 @@ class Login extends Component {
       errMessage: ''
     })
     try {
-      let data = await handleLoginApi(this.state.username, this.state.password);
+      let data = await handleLoginApi(this.state.email, this.state.password);
       if (data && data.errCode !== 0) {
         this.setState({
           errMessage: data.message
@@ -73,11 +73,11 @@ class Login extends Component {
           <div className='login-content row'>
             <div className='col-12 text-login'>Sign In</div>
             <div className='col-12 form-group login-input'>
-              <label>Username: </label>
-              <input type='text' className='form-control' placeholder='Enter your username' onChange={(event) => this.handleOnChangeUsername(event)}></input>
+              <label>Email</label>
+              <input type='text' className='form-control' placeholder='Enter your email' onChange={(event) => this.handleOnChangeEmail(event)}></input>
             </div>
             <div className='col-12 form-group login-input'>
-              <label>Password: </label>
+              <label>Password</label>
               <div className='custom-input-password'>
                 <input type={this.state.isShowPassword ? 'text' : 'password'} className='form-control' placeholder='Enter your password' onChange={(event) => this.handleOnChangePassword(event)}></input>
                 <span onClick={() => this.handleShowHidePassword()}>

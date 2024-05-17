@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import _ from 'lodash';
@@ -10,7 +10,7 @@ class ModalEditUser extends Component {
         this.state = {
             id: '',
             email: '',
-            password: '',
+            // password: '',
             firstName: '',
             lastName: '',
             phoneNumber: '',
@@ -25,7 +25,7 @@ class ModalEditUser extends Component {
             this.setState({
                 id: user.id,
                 email: user.email,
-                password: 'hardcode',
+                // password: 'hardcode',
                 firstName: user.firstName,
                 lastName: user.lastName,
                 phoneNumber: user.phoneNumber,
@@ -85,10 +85,10 @@ class ModalEditUser extends Component {
                             <label>Email</label>
                             <input disabled type='email' onChange={(event) => { this.handleOnChangeInput(event, 'email') }} value={this.state.email}></input>
                         </div>
-                        <div className='input-container'>
+                        {/* <div className='input-container'>
                             <label>Password</label>
                             <input disabled type='password' onChange={(event) => { this.handleOnChangeInput(event, 'password') }} value={this.state.password}></input>
-                        </div>
+                        </div> */}
                         <div className='input-container'>
                             <label>First Name</label>
                             <input type='text' onChange={(event) => { this.handleOnChangeInput(event, 'firstName') }} value={this.state.firstName}></input>
