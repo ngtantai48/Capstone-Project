@@ -1,7 +1,8 @@
 .home-header-container {
     height: 60px;
-    width: 100%;
-    padding: 0 20px;
+    // width: 100%;
+    padding: 0 40px;
+    background-color: #e2fff7;
 
     .home-header-content {
         width: 100%;
@@ -9,33 +10,44 @@
         display: flex;
 
         .left-content {
-            width: 25%;
+            width: 20%;
             display: flex;
-            border: 1px solid green;
             align-items: center;
-            cursor: pointer;
+            margin-left: 40px;
 
             .header-logo {
                 background: url('../../assets/logo.svg') center center no-repeat;
                 height: 100%;
-                width: 75%;
+                cursor: pointer;
+                transform: scale(0.5, 0.5);
+                margin-left: -90px;
+                width: 100%;
             }
 
             i {
                 font-size: 25px;
                 color: gray;
-                margin-left: 40px;
+                cursor: pointer;
             }
         }
 
         .center-content {
-            width: 50%;
-            border: 1px solid orange;
+            width: 55%;
             display: flex;
             justify-content: space-between;
             align-items: center;
 
             .child-content {
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+
                 .subs-title {
                     font-weight: 400;
                     font-size: 12px;
@@ -45,28 +57,91 @@
 
         .right-content {
             width: 25%;
-            border: 1px solid gray;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
+
+            .support {
+                padding-right: 50px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+
+                i {
+                    font-size: 15px;
+                    margin-right: 5px;
+                }
+            }
+
+            .language-vi {
+                cursor: pointer;
+                font-family: auto;
+                font-size: 16px;
+                opacity: 0.6;
+
+                &.active {
+                    opacity: 1;
+                    font-weight: bold;
+                    color: orange;
+                }
+
+                &:hover {
+                    transform: scale(1.05);
+                    opacity: 0.8;
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+            }
+
+            .language-en {
+                margin: 0 15px;
+                cursor: pointer;
+                font-family: auto;
+                font-weight: bold;
+                font-size: 16px;
+                opacity: 0.6;
+
+                &.active {
+                    opacity: 1;
+                    font-weight: bold;
+                    color: blue;
+                }
+
+                &:hover {
+                    transform: scale(1.05);
+                    opacity: 0.8;
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+            }
         }
     }
 }
 
 .home-header-banner {
-    background: url('../../assets/header-background.jpg');
+    background-image: url('../../assets/header-background.jpg');
     height: 700px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
-    // align-items: center;
-    // text-align: center;
 
     .content-up {
-        border: 1px solid red;
-        height: 50%;
+        background-image: linear-gradient(rgba(126, 126, 126, 0.25), rgba(255, 255, 255, 0.1));
+        height: 65%;
         padding-top: 15px;
 
         .title1 {
@@ -75,7 +150,7 @@
             color: #fff;
             margin-bottom: 5px;
             text-shadow: 1px 1px 1px #333;
-            margin-top: 30px;
+            margin-top: 70px;
         }
 
         .title2 {
@@ -84,6 +159,7 @@
             margin-bottom: 20px;
             text-shadow: 1px 1px 1px #333;
             text-align: center;
+            font-weight: bold;
         }
 
         .search {
@@ -109,27 +185,32 @@
     }
 
     .content-down {
-        border: 1px solid green;
-        height: 50%;
+        height: 35%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
 
         .options {
             text-align: center;
             display: flex;
-            gap: 50px;
+            gap: 10px;
             justify-content: center;
+            padding-bottom: 70px;
 
             .option-child {
-                width: 125px;
+                width: 170px;
+                transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
 
                 .icon-child {
-                    background: white;
+                    background: #ffee80;
                     padding: 10px;
                     border-radius: 50%;
                     width: 45px;
                     height: 40px;
                     text-align: center;
                     margin: 0 auto;
-                    cursor: pointer;
+                    transition: background-color 0.3s, transform 0.3s;
 
                     i {
                         font-size: 20px;
@@ -138,12 +219,35 @@
                 }
 
                 .text-child {
-                    font-size: 15px;
+                    font-size: 14px;
                     font-weight: bold;
+                    transition: color 0.3s;
+                }
+
+                &:hover {
+                    transform: scale(1.05);
                     cursor: pointer;
 
-                    &:hover {
+                    .icon-child {
+                        background-color: #49bce2;
+                        transform: rotate(10deg);
+
+                        i {
+                            color: white;
+                        }
+                    }
+
+                    .text-child {
                         color: #49bce2;
+                    }
+                }
+
+                &:active {
+                    transform: scale(0.95);
+
+                    .icon-child {
+                        background-color: #1b7ba4;
+                        transform: rotate(-10deg);
                     }
                 }
             }
