@@ -65,14 +65,16 @@
                 padding-right: 50px;
                 display: flex;
                 align-items: center;
-                cursor: pointer;
 
-                &:hover {
-                    transform: scale(1.05);
-                }
+                span {
+                    &:hover {
+                        transform: scale(1.05);
+                        cursor: pointer;
+                    }
 
-                &:active {
-                    transform: scale(0.95);
+                    &:active {
+                        transform: scale(0.95);
+                    }
                 }
 
                 i {
@@ -82,7 +84,6 @@
             }
 
             .language-vi {
-                cursor: pointer;
                 font-family: auto;
                 font-size: 16px;
                 opacity: 0.6;
@@ -96,6 +97,7 @@
                 &:hover {
                     transform: scale(1.05);
                     opacity: 0.8;
+                    cursor: pointer;
                 }
 
                 &:active {
@@ -105,7 +107,6 @@
 
             .language-en {
                 margin: 0 15px;
-                cursor: pointer;
                 font-family: auto;
                 font-weight: bold;
                 font-size: 16px;
@@ -120,6 +121,7 @@
                 &:hover {
                     transform: scale(1.05);
                     opacity: 0.8;
+                    cursor: pointer;
                 }
 
                 &:active {
@@ -171,6 +173,7 @@
 
             i {
                 margin: 0 5px;
+                cursor: pointer;
             }
 
             input {
@@ -196,7 +199,7 @@
             display: flex;
             gap: 10px;
             justify-content: center;
-            padding-bottom: 70px;
+            padding-bottom: 60px;
 
             .option-child {
                 width: 170px;
