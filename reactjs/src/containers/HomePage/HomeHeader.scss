@@ -1,8 +1,30 @@
 .home-header-container {
     height: 60px;
-    // width: 100%;
+    width: 100%;
     padding: 0 40px;
     background-color: #e2fff7;
+    position: sticky;
+    top: 0;
+    z-index: 10000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 5px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
+        transition: opacity 0.3s ease;
+        opacity: 1;
+    }
+
+    &:not(:first-child) {
+        background-color: #d1f7ef;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
     .home-header-content {
         width: 100%;

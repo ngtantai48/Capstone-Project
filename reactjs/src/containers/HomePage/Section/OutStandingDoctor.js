@@ -6,7 +6,6 @@ import Slider from "react-slick";
 class OutStandingDoctor extends Component {
 
     render() {
-
         return (
             <div className='section-share section-outstanding-doctor'>
                 <div className='section-container'>
@@ -88,7 +87,6 @@ class OutStandingDoctor extends Component {
             </div>
         );
     }
-
 }
 
 const mapStateToProps = state => {
