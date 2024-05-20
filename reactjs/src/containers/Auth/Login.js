@@ -92,10 +92,10 @@ class Login extends Component {
               <button className='btn-login' onClick={() => this.handleLogin()}>Log In</button>
             </div>
             <div className='col-12'>
-              <span className='forgot-password'>Forgot your password?</span>
+              <span className='forgot-password'>Forgot your password ?</span>
             </div>
             <div className='col-12 text-center mt-4'>
-              <span className='text-other-login'>Or login with: </span>
+              <span className='text-other-login'>Or login with</span>
             </div>
             <div className='col-12 social-login'>
               <i className="fa-brands fa-google-plus-g google"></i>

@@ -10,24 +10,31 @@ module.exports = {
                 defaultValue: Sequelize.UUIDV4
             },
             key: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: true
             },
             type: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: true
             },
             valueEn: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: true
             },
             valueVi: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: true
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: Sequelize.DATE,
+                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: Sequelize.DATE,
+                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+                onUpdate: Sequelize.literal('CURRENT_TIMESTAMP')
             }
         });
     },
