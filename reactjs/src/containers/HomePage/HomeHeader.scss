@@ -84,19 +84,17 @@
             align-items: center;
 
             .support {
-                padding-right: 50px;
+                margin: 0 70px;
                 display: flex;
                 align-items: center;
 
-                span {
-                    &:hover {
-                        transform: scale(1.05);
-                        cursor: pointer;
-                    }
+                &:hover {
+                    transform: scale(1.05);
+                    cursor: pointer;
+                }
 
-                    &:active {
-                        transform: scale(0.95);
-                    }
+                &:active {
+                    transform: scale(0.95);
                 }
 
                 i {

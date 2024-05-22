@@ -41,9 +41,12 @@ class HomeHeader extends Component {
                             </div>
                         </div>
                         <div className='right-content'>
-                            <div className='support'><span><i className="fa-solid fa-headset"></i><FormattedMessage id='home-header.support' /></span></div>
-                            <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}><span onClick={() => { this.changeLanguage(LANGUAGES.VI) }}>VI</span></div>
-                            <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}><span onClick={() => { this.changeLanguage(LANGUAGES.EN) }}>EN</span></div>
+                            {/* <div className='support'><span><i className="fa-solid fa-headset"></i><FormattedMessage id='home-header.support' /></span></div> */}
+                            {/* <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}><span onClick={() => { this.changeLanguage(LANGUAGES.VI) }}>VI</span></div> */}
+                            {/* <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}><span onClick={() => { this.changeLanguage(LANGUAGES.EN) }}>EN</span></div> */}
+                            <span className='support'><i className="fa-solid fa-headset"></i><FormattedMessage id='home-header.support' /></span>
+                            <span className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'} onClick={() => { this.changeLanguage(LANGUAGES.VI) }}>VI</span>
+                            <span className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'} onClick={() => { this.changeLanguage(LANGUAGES.EN) }}>EN</span>
                         </div>
                     </div>
                 </div>

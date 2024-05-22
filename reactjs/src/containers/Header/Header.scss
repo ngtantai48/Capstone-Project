@@ -11,21 +11,77 @@
     padding: 0 20px;
     position: relative;
 
-    .btn-logout {
+    .languages {
         display: flex;
         align-items: center;
-        color: $common-text-color;
-        height: 40px;
-        padding: 0 15px;
-        transition: background-color 0.3s ease;
 
-        &:hover {
-            background-color: darken($colormain, 5);
+        .languages-custom {
+            margin: 0 20px;
+
+            .language-vi {
+                font-family: auto;
+                font-size: 16px;
+                opacity: 0.6;
+
+                &.active {
+                    opacity: 1;
+                    font-weight: bold;
+                    color: orange;
+                }
+
+                &:hover {
+                    transform: scale(1.05);
+                    opacity: 0.8;
+                    cursor: pointer;
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+            }
+
+            .language-en {
+                margin: 0 15px;
+                font-family: auto;
+                font-weight: bold;
+                font-size: 16px;
+                opacity: 0.6;
+
+                &.active {
+                    opacity: 1;
+                    font-weight: bold;
+                    color: orange;
+                }
+
+                &:hover {
+                    transform: scale(1.05);
+                    opacity: 0.8;
+                    cursor: pointer;
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+            }
         }
 
-        i {
-            font-size: $base-size + 1px;
-            margin-left: 5px;
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            color: $common-text-color;
+            height: 40px;
+            padding: 0 15px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+
+            &:hover {
+                background-color: darken($colormain, 5);
+            }
+
+            i {
+                font-size: $base-size + 1px;
+                margin-left: 5px;
+            }
         }
     }
 }
