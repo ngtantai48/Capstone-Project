@@ -8,7 +8,7 @@
     background-color: $colormain;
     color: $common-text-color;
     height: 40px;
-    padding: 0 20px;
+    padding: 25px;
     position: relative;
 
     .languages {
@@ -16,7 +16,7 @@
         align-items: center;
 
         .languages-custom {
-            margin: 0 20px;
+            margin: 0 40px;
 
             .language-vi {
                 font-family: auto;
@@ -41,7 +41,7 @@
             }
 
             .language-en {
-                margin: 0 15px;
+                padding-left: 15px;
                 font-family: auto;
                 font-weight: bold;
                 font-size: 16px;

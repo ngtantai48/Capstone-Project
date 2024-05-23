@@ -54,15 +54,20 @@ class Login extends Component {
           })
         }
       }
-      console.log('ngtantai', error.response)
+      console.log('login error: ', error.response)
     }
-
   }
 
   handleShowHidePassword = () => {
     this.setState({
       isShowPassword: !this.state.isShowPassword
     })
+  }
+
+  handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.handleLogin();
+    }
   }
 
   render() {
@@ -74,12 +79,24 @@ class Login extends Component {
             <div className='col-12 text-login'>Sign In</div>
             <div className='col-12 form-group login-input'>
               <label>Email</label>
-              <input type='text' className='form-control' placeholder='Enter your email' onChange={(event) => this.handleOnChangeEmail(event)}></input>
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Enter your email'
+                onChange={(event) => this.handleOnChangeEmail(event)}
+                onKeyDown={this.handleKeyDown}
+              ></input>
             </div>
             <div className='col-12 form-group login-input'>
               <label>Password</label>
               <div className='custom-input-password'>
-                <input type={this.state.isShowPassword ? 'text' : 'password'} className='form-control' placeholder='Enter your password' onChange={(event) => this.handleOnChangePassword(event)}></input>
+                <input
+                  className='form-control'
+                  type={this.state.isShowPassword ? 'text' : 'password'}
+                  placeholder='Enter your password'
+                  onChange={(event) => this.handleOnChangePassword(event)}
+                  onKeyDown={this.handleKeyDown}
+                ></input>
                 <span onClick={() => this.handleShowHidePassword()}>
                   <i className={this.state.isShowPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}></i>
                 </span>
