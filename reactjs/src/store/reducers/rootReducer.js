@@ -6,6 +6,7 @@ import { persistReducer } from 'redux-persist';
 
 import appReducer from './appReducer';
 import userReducer from './userReducer';
+import adminReducer from './adminReducer'
 
 const persistCommonConfig = {
     storage: storage,
@@ -27,7 +28,8 @@ const appPersistConfig = {
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
     user: persistReducer(userPersistConfig, userReducer),
-    app: persistReducer(appPersistConfig, appReducer)
+    app: persistReducer(appPersistConfig, appReducer),
+    admin: adminReducer
 });
 
 export default createRootReducer;

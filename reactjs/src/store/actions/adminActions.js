@@ -1,0 +1,51 @@
+import actionTypes from './actionTypes';
+import { getTypeAllCode } from '../../services/userService';
+
+// export const fetchGenderStart = () => ({
+//     type: actionTypes.FETCH_GENDER_START
+// })
+
+export const fetchGenderStart = () => {
+    // return async (dispatch, getState) => {
+    //     try {
+    //         const types = ['gender', 'position', 'role'];
+
+    //         for (const type of types) {
+    //             const res = await getTypeAllCode(type);
+    //             if (res && res.errCode === 0) {
+    //                 dispatch(fetchGenderSuccess(res.data));
+    //             } else {
+    //                 dispatch(fetchGenderFailed());
+    //             }
+    //         }
+    //     } catch (error) {
+    //         dispatch(fetchGenderFailed());
+    //         console.log("fetchGenderStart error: ", error)
+    //     }
+    // }
+
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTypeAllCode('GENDER');
+            if (res && res.errCode === 0) {
+                dispatch(fetchGenderSuccess(res.data))
+            } else {
+                dispatch(fetchGenderFailed());
+            }
+        } catch (error) {
+            dispatch(fetchGenderFailed());
+            console.log('fetchGenderStart error: ', error)
+        }
+    }
+}
+
+export const fetchGenderSuccess = (genderData) => ({
+    type: actionTypes.FETCH_GENDER_SUCCESS,
+    data: genderData
+})
+
+export const fetchGenderFailed = () => ({
+    type: actionTypes.FETCH_GENDER_FAILED
+})
+
+//start doing end
