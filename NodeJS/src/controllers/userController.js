@@ -11,7 +11,6 @@ let handleLogin = async (req, res) => {
         })
     }
 
-
     let userData = await userService.handleUserLogin(email, password)
     // check email exist
     // compare password
@@ -66,6 +65,10 @@ let handleEditUser = async (req, res) => {
 
 let getAllCode = async (req, res) => {
     try {
+        // setTimeout(async () => {
+        //     let data = await userService.getAllCodeService(req.query.type);
+        //     return res.status(200).json(data)
+        // }, 5000)
         let data = await userService.getAllCodeService(req.query.type);
         return res.status(200).json(data)
     } catch (error) {

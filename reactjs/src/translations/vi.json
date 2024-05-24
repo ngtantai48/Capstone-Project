@@ -50,6 +50,7 @@
         "position": "Chức danh",
         "role": "Vai trò",
         "create": "Tạo người dùng",
-        "avatar": "Ảnh đại diện"
+        "avatar": "Ảnh đại diện",
+        "upload-avatar": "Chọn ảnh"
     }
 }

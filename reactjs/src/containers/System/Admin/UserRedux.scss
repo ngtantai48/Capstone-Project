@@ -1,0 +1,44 @@
+.preview-avatar-container {
+    .label-upload {
+        padding: 6px;
+        border-radius: 4px;
+        background: #ddd;
+        transform: scale(1);
+
+        i {
+            padding: 0 10px;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background: #aaa5a5;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+
+    .preview-avatar {
+        border-radius: 4px;
+        height: 50px;
+        width: 100%;
+        border: 1px solid #dee2e6;
+        margin-top: 5px;
+        background: center center no-repeat;
+        background-size: contain;
+
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+}
+
+label {
+    font-weight: bold;
+}
