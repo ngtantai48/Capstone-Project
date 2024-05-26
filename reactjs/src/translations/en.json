@@ -51,6 +51,8 @@
         "role": "Role",
         "create": "Create user",
         "avatar": "Avatar",
-        "upload-avatar": "Upload file"
+        "upload-avatar": "Upload file",
+        "save": "Save Information",
+        "cancel": "Cancel"
     }
 }

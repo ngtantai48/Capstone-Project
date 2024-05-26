@@ -5,7 +5,6 @@ import * as actions from '../../../store/actions';
 
 
 class TableManageUser extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -27,6 +26,10 @@ class TableManageUser extends Component {
 
     handleDeleteUser = (user) => {
         this.props.deleteAUserRedux(user.id);
+    }
+
+    handleEditUser = (user) => {
+        this.props.handleEditUserFromParentKey(user)
     }
 
     render() {
@@ -56,7 +59,7 @@ class TableManageUser extends Component {
                                     <td>{item.phoneNumber}</td>
                                     <td>{item.address}</td>
                                     <td>
-                                        <button className='btn-edit'><i className="fa-solid fa-pencil"></i></button>
+                                        <button onClick={() => { this.handleEditUser(item) }} className='btn-edit'><i className="fa-solid fa-pencil"></i></button>
                                         <button onClick={() => { this.handleDeleteUser(item) }} className='btn-delete'><i className="fa-solid fa-trash-can"></i></button>
                                     </td>
                                 </tr>

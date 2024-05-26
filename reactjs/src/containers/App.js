@@ -13,7 +13,7 @@ import System from '../routes/System';
 import HomePage from './HomePage/HomePage'
 import CustomScrollbars from '../components/CustomScrollbars';
 
-import { CustomToastCloseButton } from '../components/CustomToast';
+// import { CustomToastCloseButton } from '../components/CustomToast';
 
 class App extends Component {
 
@@ -40,7 +40,6 @@ class App extends Component {
             <Fragment>
                 <Router history={history}>
                     <div className="main-container">
-
                         <div className="content-container">
                             <CustomScrollbars style={{ height: '100vh', width: '100%' }}>
                                 <Switch>

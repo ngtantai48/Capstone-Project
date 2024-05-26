@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers, createNewUserService, deleteUserService, EditUserService } from '../../services/userService';
+import { getAllUsers, createNewUserService, deleteUserService, editUserService } from '../../services/userService';
 import ModalUser from './ModalUser';
 import ModalEditUser from './ModalEditUser';
 import { emitter } from '../../utils/emitter';
@@ -77,7 +77,7 @@ class UserManage extends Component {
 
     doEditUser = async (user) => {
         try {
-            let res = await EditUserService(user);
+            let res = await editUserService(user);
             if (res && res.errCode === 0) {
                 this.setState({
                     isOpenModalEditUser: false

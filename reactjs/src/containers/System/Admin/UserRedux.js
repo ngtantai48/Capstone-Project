@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, CRUD_ACTIONS } from '../../../utils';
 import * as actions from '../../../store/actions';
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
@@ -29,7 +29,8 @@ class UserRedux extends Component {
             role: '',
             avatar: '',
 
-            arrCheck: { email: '', password: '', firstName: '', lastName: '', phoneNumber: '', address: '', gender: '', position: '', role: '', avatar: '', },
+            action: '',
+            userEditid: ''
         };
     }
 
@@ -62,9 +63,23 @@ class UserRedux extends Component {
         defaultSelectState('roleRedux', 'roleArr', 'role');
 
         if (prevProps.listUsers !== this.props.listUsers) {
+            const defaultValues = {
+                gender: this.props.genderRedux && this.props.genderRedux.length > 0 ? this.props.genderRedux[0].key : '',
+                position: this.props.positionRedux && this.props.positionRedux.length > 0 ? this.props.positionRedux[0].key : '',
+                role: this.props.roleRedux && this.props.roleRedux.length > 0 ? this.props.roleRedux[0].key : '',
+            };
             this.setState({
-                ...this.state.arrCheck
-            })
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                address: '',
+                avatar: '',
+                previewAvaUrl: '',
+                ...defaultValues,
+                action: CRUD_ACTIONS.CREATE
+            });
         }
     }
 
@@ -99,10 +114,12 @@ class UserRedux extends Component {
 
     handleSaveUser = () => {
         let isValid = this.checkValidateInput();
-        if (!isValid) {
-            return
-        } else {
-            //fire redux action
+        if (!isValid)
+            return;
+
+        let { action } = this.state;
+        if (action === CRUD_ACTIONS.CREATE) {
+            //fire redux create user
             this.props.createNewUser({
                 email: this.state.email,
                 password: this.state.password,
@@ -111,8 +128,26 @@ class UserRedux extends Component {
                 phoneNumber: this.state.phoneNumber,
                 address: this.state.address,
                 gender: this.state.gender,
+                positionId: this.state.position,
                 roleId: this.state.role,
-                positionId: this.state.position
+            })
+        }
+
+        if (action === CRUD_ACTIONS.EDIT) {
+            //fire redux edit user
+            this.props.editAUserRedux({
+                id: this.state.userEditid,
+                email: this.state.email,
+                password: this.state.password,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                phoneNumber: this.state.phoneNumber,
+                address: this.state.address,
+                gender: this.state.gender,
+                positionId: this.state.position,
+                roleId: this.state.role,
+
+                // avatar: this.state.avatar
             })
         }
     }
@@ -127,33 +162,62 @@ class UserRedux extends Component {
 
     checkValidateInput = () => {
         const { language } = this.props;
-        const arrCheckEn = {
-            email: 'Email',
-            password: 'Password',
-            firstName: 'First Name',
-            lastName: 'Last Name',
-            phoneNumber: 'Phone Number',
-            address: 'Address'
+        const fields = {
+            email: language === 'en' ? 'Email' : 'Mật khẩu',
+            password: language === 'en' ? 'Password' : 'Mật khẩu',
+            firstName: language === 'en' ? 'First Name' : 'Tên',
+            lastName: language === 'en' ? 'Last Name' : 'Họ',
+            phoneNumber: language === 'en' ? 'Phone Number' : 'Số điện thoại',
+            address: language === 'en' ? 'Address' : 'Địa chỉ'
         };
-        const arrCheckVi = {
-            email: 'Email',
-            password: 'Mật khẩu',
-            firstName: 'Tên',
-            lastName: 'Họ',
-            phoneNumber: 'Số điện thoại',
-            address: 'Địa chỉ'
-        };
-        const arrCheck = language === 'en' ? arrCheckEn : arrCheckVi;
 
-        for (let key in arrCheck) {
+        for (let key in fields) {
             if (!this.state[key]) {
                 let message = language === 'en' ? 'This input is required: ' : 'Ô dữ liệu cần phải nhập vào: ';
-                alert(message + arrCheck[key]);
+                alert(message + fields[key]);
                 return false;
             }
         }
 
         return true;
+    }
+
+    handleEditUserFromParent = (user) => {
+        // console.log('check handle edit user FromParent: ', user)
+        this.setState({
+            email: user.email,
+            password: 'HARDCODE',
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phoneNumber: user.phoneNumber,
+            address: user.address,
+            gender: user.gender,
+            role: user.roleId,
+            position: user.positionId,
+            avatar: user.avatar,
+            action: CRUD_ACTIONS.EDIT,
+            userEditid: user.id
+        });
+    }
+
+    handleCancelUpdate = () => {
+        const defaultValues = {
+            gender: this.props.genderRedux && this.props.genderRedux.length > 0 ? this.props.genderRedux[0].key : '',
+            position: this.props.positionRedux && this.props.positionRedux.length > 0 ? this.props.positionRedux[0].key : '',
+            role: this.props.roleRedux && this.props.roleRedux.length > 0 ? this.props.roleRedux[0].key : '',
+        };
+        this.setState({
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            address: '',
+            avatar: '',
+            ...defaultValues,
+            action: CRUD_ACTIONS.CREATE,
+            previewAvaUrl: ''
+        });
     }
 
 
@@ -162,7 +226,7 @@ class UserRedux extends Component {
         // console.log('check props from redux: ', this.state)
         // let isGetGenders = this.props.isLoadingGender;
 
-        const { email, password, firstName, lastName, phoneNumber, address } = this.state
+        const { email, password, firstName, lastName, phoneNumber, address, gender, position, role } = this.state
 
         return (
             <div className='user-redux-container'>
@@ -181,6 +245,7 @@ class UserRedux extends Component {
                                     type='email'
                                     value={email}
                                     onChange={(event) => this.onChangeInput(event, 'email')}
+                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
                                 />
                             </div>
                             <div className='col-3 my-3'>
@@ -191,6 +256,7 @@ class UserRedux extends Component {
                                     autoComplete=''
                                     value={password}
                                     onChange={(event) => this.onChangeInput(event, 'password')}
+                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
                                 />
                             </div>
                             <div className='col-3 my-3'>
@@ -231,19 +297,19 @@ class UserRedux extends Component {
                             </div>
                             <div className='col-3 my-3'>
                                 <label><FormattedMessage id='manage-user.gender' /></label>
-                                <select className="form-select" onChange={(event) => this.onChangeInput(event, 'gender')}>
+                                <select className="form-select" onChange={(event) => this.onChangeInput(event, 'gender')} value={gender}>
                                     {this.renderSelectOptions(genderArr)}
                                 </select>
                             </div>
                             <div className='col-3 my-3'>
                                 <label><FormattedMessage id='manage-user.position' /></label>
-                                <select className="form-select" onChange={(event) => this.onChangeInput(event, 'position')}>
+                                <select className="form-select" onChange={(event) => this.onChangeInput(event, 'position')} value={position}>
                                     {this.renderSelectOptions(positionArr)}
                                 </select>
                             </div>
                             <div className='col-3 my-3'>
                                 <label><FormattedMessage id='manage-user.role' /></label>
-                                <select className="form-select" onChange={(event) => this.onChangeInput(event, 'role')}>
+                                <select className="form-select" onChange={(event) => this.onChangeInput(event, 'role')} value={role}>
                                     {this.renderSelectOptions(roleArr)}
                                 </select>
                             </div>
@@ -258,7 +324,12 @@ class UserRedux extends Component {
                                         accept="image/*"
                                         onChange={(event) => { this.handleOnChangeAvatar(event) }}
                                     />
-                                    <label className='label-upload' htmlFor='previewAva'><FormattedMessage id='manage-user.upload-avatar' /><i className="fa-solid fa-upload"></i></label>
+                                    <label className='label-upload'
+                                        htmlFor='previewAva'
+                                    >
+                                        <FormattedMessage id='manage-user.upload-avatar' />
+                                        <i className="fa-solid fa-upload"></i>
+                                    </label>
                                     <div
                                         className='preview-avatar'
                                         style={{ backgroundImage: `url(${this.state.previewAvaUrl})` }}
@@ -267,21 +338,38 @@ class UserRedux extends Component {
                                 </div>
                             </div>
                             <div className='col-12 my-3'>
-                                <button className='btn btn-primary' onClick={() => this.handleSaveUser()}><FormattedMessage id='manage-user.create' /></button>
+                                <button
+                                    className={this.state.action === CRUD_ACTIONS.EDIT ? 'btn btn-warning' : 'btn btn-primary'}
+                                    onClick={() => this.handleSaveUser()}
+                                >
+                                    <FormattedMessage id={this.state.action === CRUD_ACTIONS.EDIT ? 'manage-user.save' : 'manage-user.create'} />
+                                </button>
+                                {this.state.action === CRUD_ACTIONS.EDIT && (
+                                    <button
+                                        className='btn btn-secondary ms-3'
+                                        onClick={() => this.handleCancelUpdate()}
+                                    >
+                                        <FormattedMessage id='manage-user.cancel' />
+                                    </button>
+                                )}
                             </div>
                             <div className='col-12 my-5'>
-                                <TableManageUser />
+                                <TableManageUser
+                                    handleEditUserFromParentKey={this.handleEditUserFromParent}
+                                    action={this.state.action}
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
-                {this.state.isOpen === true &&
+                {
+                    this.state.isOpen === true &&
                     <Lightbox
                         mainSrc={this.state.previewAvaUrl}
                         onCloseRequest={() => this.setState({ isOpen: false })}
                     />
                 }
-            </div>
+            </div >
         );
     }
 }
@@ -303,9 +391,8 @@ const mapDispatchToProps = dispatch => {
         getPositionStart: () => dispatch(actions.fetchPositionStart()),
         getRoleStart: () => dispatch(actions.fetchRoleStart()),
         createNewUser: (data) => dispatch(actions.createNewUser(data)),
-        fetchUserRedux: () => {
-            dispatch(actions.fetchAllUsersStart())
-        }
+        fetchUserRedux: () => dispatch(actions.fetchAllUsersStart()),
+        editAUserRedux: (data) => dispatch(actions.editAUser(data)),
     }
 
     // processLogout: () => dispatch(actions.processLogout()),

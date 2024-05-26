@@ -51,6 +51,8 @@
         "role": "Vai trò",
         "create": "Tạo người dùng",
         "avatar": "Ảnh đại diện",
-        "upload-avatar": "Chọn ảnh"
+        "upload-avatar": "Chọn ảnh",
+        "save": "Lưu thông tin",
+        "cancel": "Huỷ"
     }
 }

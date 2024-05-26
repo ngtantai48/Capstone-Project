@@ -23,7 +23,7 @@ const deleteUserService = (userId) => {
     })
 }
 
-const EditUserService = (inputData) => {
+const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData)
 }
 
@@ -36,6 +36,6 @@ export {
     getAllUsers,
     createNewUserService,
     deleteUserService,
-    EditUserService,
+    editUserService,
     getTypeAllCode
 }
