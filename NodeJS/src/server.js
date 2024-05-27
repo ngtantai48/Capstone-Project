@@ -35,8 +35,11 @@ app.use(function (req, res, next) {
 
 
 //config app
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(bodyParser.json({ limit: '512mb' }));
+app.use(bodyParser.urlencoded({ limit: '512mb', extended: true }));
 
 viewEngine(app);
 initWebRoutes(app);

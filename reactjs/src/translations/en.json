@@ -38,6 +38,7 @@
     },
     "manage-user": {
         "add": "Add a new user",
+        "edit": "Change user's information",
         "email": "Email",
         "enter-email": "Enter email",
         "password": "Password",
@@ -53,6 +54,7 @@
         "avatar": "Avatar",
         "upload-avatar": "Upload file",
         "save": "Save Information",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "del-avatar": "Delete avatar"
     }
 }

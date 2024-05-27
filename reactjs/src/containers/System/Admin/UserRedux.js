@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { LANGUAGES, CRUD_ACTIONS } from '../../../utils';
+import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from '../../../utils';
 import * as actions from '../../../store/actions';
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import TableManageUser from './TableManageUser';
+import { Buffer } from 'buffer';
+
 
 class UserRedux extends Component {
     constructor(props) {
@@ -92,17 +94,17 @@ class UserRedux extends Component {
         ));
     }
 
-    handleOnChangeAvatar = (event) => {
+    handleOnChangeAvatar = async (event) => {
         let data = event.target.files;
         let file = data[0];
         if (file) {
+            let base64 = await CommonUtils.getBase64(file);
             let objectUrl = URL.createObjectURL(file);
             this.setState({
                 previewAvaUrl: objectUrl,
-                avatar: file
+                avatar: base64
             })
         }
-
     }
 
     openPreviewAvatar = () => {
@@ -130,6 +132,7 @@ class UserRedux extends Component {
                 gender: this.state.gender,
                 positionId: this.state.position,
                 roleId: this.state.role,
+                avatar: this.state.avatar
             })
         }
 
@@ -146,8 +149,7 @@ class UserRedux extends Component {
                 gender: this.state.gender,
                 positionId: this.state.position,
                 roleId: this.state.role,
-
-                // avatar: this.state.avatar
+                avatar: this.state.avatar
             })
         }
     }
@@ -183,6 +185,11 @@ class UserRedux extends Component {
     }
 
     handleEditUserFromParent = (user) => {
+        let imageBase64 = '';
+        if (user.image) {
+            imageBase64 = new Buffer(user.image, 'base64').toString('binary');
+        }
+        console.log('imageBase64: ', user.image);
         // console.log('check handle edit user FromParent: ', user)
         this.setState({
             email: user.email,
@@ -194,9 +201,12 @@ class UserRedux extends Component {
             gender: user.gender,
             role: user.roleId,
             position: user.positionId,
-            avatar: user.avatar,
+            avatar: '',
+            previewAvaUrl: imageBase64,
             action: CRUD_ACTIONS.EDIT,
             userEditid: user.id
+        }, () => {
+            console.log('check state from parent: ', this.state)
         });
     }
 
@@ -220,6 +230,12 @@ class UserRedux extends Component {
         });
     }
 
+    handleDelAva = () => {
+        this.setState({
+            previewAvaUrl: ''
+        })
+    }
+
 
     render() {
         const { genderArr, positionArr, roleArr } = this.state
@@ -237,7 +253,9 @@ class UserRedux extends Component {
                 <div className="user-redux-body">
                     <div className='container mt-5'>
                         <div className='row'>
-                            <div className='col-12 my-3'><FormattedMessage id='manage-user.add' /></div>
+                            <div className='col-12 my-3'>
+                                {this.state.action === CRUD_ACTIONS.EDIT ? <FormattedMessage id='manage-user.edit' /> : <FormattedMessage id='manage-user.add' />}
+                            </div>
                             <div className='col-3 my-3'>
                                 <label><FormattedMessage id='manage-user.email' /></label>
                                 <input
@@ -324,12 +342,17 @@ class UserRedux extends Component {
                                         accept="image/*"
                                         onChange={(event) => { this.handleOnChangeAvatar(event) }}
                                     />
-                                    <label className='label-upload'
-                                        htmlFor='previewAva'
-                                    >
-                                        <FormattedMessage id='manage-user.upload-avatar' />
-                                        <i className="fa-solid fa-upload"></i>
-                                    </label>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <label className="label-upload" htmlFor="previewAva">
+                                            <FormattedMessage id='manage-user.upload-avatar' />
+                                            <i className="fa-solid fa-upload ms-1"></i>
+                                        </label>
+                                        {this.state.action === CRUD_ACTIONS.EDIT && this.state.previewAvaUrl && (
+                                            <button className="btn btn-danger" onClick={() => this.handleDelAva()}>
+                                                <FormattedMessage id='manage-user.del-avatar' />
+                                            </button>
+                                        )}
+                                    </div>
                                     <div
                                         className='preview-avatar'
                                         style={{ backgroundImage: `url(${this.state.previewAvaUrl})` }}

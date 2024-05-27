@@ -38,6 +38,7 @@
     },
     "manage-user": {
         "add": "Thêm mới người dùng",
+        "edit": "Thay đổi thông tin người dùng",
         "email": "Email",
         "enter-email": "Nhập email",
         "password": "Mật khẩu",
@@ -53,6 +54,7 @@
         "avatar": "Ảnh đại diện",
         "upload-avatar": "Chọn ảnh",
         "save": "Lưu thông tin",
-        "cancel": "Huỷ"
+        "cancel": "Huỷ",
+        "del-avatar": "Xoá ảnh"
     }
 }
