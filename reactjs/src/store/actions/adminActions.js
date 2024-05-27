@@ -4,7 +4,8 @@ import {
     createNewUserService,
     getAllUsers,
     deleteUserService,
-    editUserService
+    editUserService,
+    getTopDoctorHomeService
 } from '../../services/userService';
 import { toast } from "react-toastify"
 
@@ -156,14 +157,17 @@ export const fetchAllUsersFailed = () => ({
 export const deleteAUser = (userId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await deleteUserService(userId);
-            if (res && res.errCode === 0) {
-                toast.success("Delete the user success !")
-                dispatch(deleteUserSuccess(res.data));
-                dispatch(fetchAllUsersStart())
-            } else {
-                toast.error("Delete the user error !")
-                dispatch(deleteUserFailed());
+            const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+            if (confirmDelete) {
+                let res = await deleteUserService(userId);
+                if (res && res.errCode === 0) {
+                    toast.success("Delete the user success !")
+                    dispatch(deleteUserSuccess(res.data));
+                    dispatch(fetchAllUsersStart())
+                } else {
+                    toast.error("Delete the user error !")
+                    dispatch(deleteUserFailed());
+                }
             }
         } catch (error) {
             toast.error("Delete the user error !")
@@ -210,4 +214,31 @@ export const editUserSuccess = () => ({
 export const editUserFailed = () => ({
     type: actionTypes.EDIT_USER_FAILED
 })
+
+
+
+export const fetchTopDoctor = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTopDoctorHomeService();
+            // console.log('check res: ', res)
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
+                    dataDoctors: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
+                })
+            }
+        } catch (error) {
+            console.log('FETCH_TOP_DOCTORS_FAILED: ', error)
+            dispatch({
+                type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
+            })
+        }
+    }
+}
+
 //start doing end

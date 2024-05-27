@@ -30,7 +30,7 @@
                     border-radius: 50%;
                     width: 120px;
                     height: 120px;
-                    background-image: url('../../assets/outstanding-doctor/anh-dai-dien-bs.jpg');
+                    // background-image: url('../../assets/outstanding-doctor/anh-dai-dien-bs.jpg');
                 }
 
                 &.section-handbook {
@@ -118,6 +118,8 @@
         .customize-border {
             border: 1px solid rgb(214, 214, 214);
             padding: 20px;
+            background-color: #d7ddd2;
+            border-radius: 10px;
         }
     }
 

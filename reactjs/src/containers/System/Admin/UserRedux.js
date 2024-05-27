@@ -55,7 +55,7 @@ class UserRedux extends Component {
                 const defaultValue = this.props[propName];
                 this.setState({
                     [stateArrName]: defaultValue,
-                    [stateKeyName]: defaultValue && defaultValue.length > 0 ? defaultValue[0].key : ''
+                    [stateKeyName]: defaultValue && defaultValue.length > 0 ? defaultValue[0].keyMap : ''
                 });
             }
         };
@@ -65,30 +65,34 @@ class UserRedux extends Component {
         defaultSelectState('roleRedux', 'roleArr', 'role');
 
         if (prevProps.listUsers !== this.props.listUsers) {
-            const defaultValues = {
-                gender: this.props.genderRedux && this.props.genderRedux.length > 0 ? this.props.genderRedux[0].key : '',
-                position: this.props.positionRedux && this.props.positionRedux.length > 0 ? this.props.positionRedux[0].key : '',
-                role: this.props.roleRedux && this.props.roleRedux.length > 0 ? this.props.roleRedux[0].key : '',
-            };
-            this.setState({
-                email: '',
-                password: '',
-                firstName: '',
-                lastName: '',
-                phoneNumber: '',
-                address: '',
-                avatar: '',
-                previewAvaUrl: '',
-                ...defaultValues,
-                action: CRUD_ACTIONS.CREATE
-            });
+            this.resetFormFields();
         }
     }
+
+    resetFormFields = () => {
+        const defaultValues = {
+            gender: this.props.genderRedux && this.props.genderRedux.length > 0 ? this.props.genderRedux[0].keyMap : '',
+            position: this.props.positionRedux && this.props.positionRedux.length > 0 ? this.props.positionRedux[0].keyMap : '',
+            role: this.props.roleRedux && this.props.roleRedux.length > 0 ? this.props.roleRedux[0].keyMap : '',
+        };
+        this.setState({
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            address: '',
+            avatar: '',
+            previewAvaUrl: '',
+            ...defaultValues,
+            action: CRUD_ACTIONS.CREATE
+        });
+    };
 
     renderSelectOptions = (items) => {
         const { language } = this.props;
         return items.map((item, index) => (
-            <option key={index} value={item.key}>
+            <option key={index} value={item.keyMap}>
                 {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
             </option>
         ));
@@ -189,7 +193,7 @@ class UserRedux extends Component {
         if (user.image) {
             imageBase64 = new Buffer(user.image, 'base64').toString('binary');
         }
-        console.log('imageBase64: ', user.image);
+        // console.log('imageBase64: ', user.image);
         // console.log('check handle edit user FromParent: ', user)
         this.setState({
             email: user.email,
@@ -205,29 +209,11 @@ class UserRedux extends Component {
             previewAvaUrl: imageBase64,
             action: CRUD_ACTIONS.EDIT,
             userEditid: user.id
-        }, () => {
-            console.log('check state from parent: ', this.state)
         });
     }
 
     handleCancelUpdate = () => {
-        const defaultValues = {
-            gender: this.props.genderRedux && this.props.genderRedux.length > 0 ? this.props.genderRedux[0].key : '',
-            position: this.props.positionRedux && this.props.positionRedux.length > 0 ? this.props.positionRedux[0].key : '',
-            role: this.props.roleRedux && this.props.roleRedux.length > 0 ? this.props.roleRedux[0].key : '',
-        };
-        this.setState({
-            email: '',
-            password: '',
-            firstName: '',
-            lastName: '',
-            phoneNumber: '',
-            address: '',
-            avatar: '',
-            ...defaultValues,
-            action: CRUD_ACTIONS.CREATE,
-            previewAvaUrl: ''
-        });
+        this.resetFormFields();
     }
 
     handleDelAva = () => {

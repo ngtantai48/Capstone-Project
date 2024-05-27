@@ -9,7 +9,7 @@ module.exports = {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4
             },
-            key: {
+            keyMap: {
                 type: Sequelize.STRING,
                 allowNull: true
             },
