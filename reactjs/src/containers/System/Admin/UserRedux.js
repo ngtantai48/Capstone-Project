@@ -124,37 +124,29 @@ class UserRedux extends Component {
             return;
 
         let { action } = this.state;
+        let user = {
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            phoneNumber: this.state.phoneNumber,
+            address: this.state.address,
+            gender: this.state.gender,
+            positionId: this.state.position,
+            roleId: this.state.role,
+            avatar: this.state.avatar
+        };
+
         if (action === CRUD_ACTIONS.CREATE) {
-            //fire redux create user
-            this.props.createNewUser({
-                email: this.state.email,
-                password: this.state.password,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                phoneNumber: this.state.phoneNumber,
-                address: this.state.address,
-                gender: this.state.gender,
-                positionId: this.state.position,
-                roleId: this.state.role,
-                avatar: this.state.avatar
-            })
+            this.props.createNewUser(user);
         }
 
         if (action === CRUD_ACTIONS.EDIT) {
-            //fire redux edit user
-            this.props.editAUserRedux({
-                id: this.state.userEditid,
-                email: this.state.email,
-                password: this.state.password,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                phoneNumber: this.state.phoneNumber,
-                address: this.state.address,
-                gender: this.state.gender,
-                positionId: this.state.position,
-                roleId: this.state.role,
-                avatar: this.state.avatar
-            })
+            user.id = this.state.userEditid;
+            if (!this.state.avatar) {
+                delete user.avatar;
+            }
+            this.props.editAUserRedux(user);
         }
     }
 
@@ -228,7 +220,7 @@ class UserRedux extends Component {
         // console.log('check props from redux: ', this.state)
         // let isGetGenders = this.props.isLoadingGender;
 
-        const { email, password, firstName, lastName, phoneNumber, address, gender, position, role } = this.state
+        const { email, password, firstName, lastName, phoneNumber, address, gender, position, role, previewAvaUrl, action } = this.state
 
         return (
             <div className='user-redux-container'>
@@ -333,7 +325,7 @@ class UserRedux extends Component {
                                             <FormattedMessage id='manage-user.upload-avatar' />
                                             <i className="fa-solid fa-upload ms-1"></i>
                                         </label>
-                                        {this.state.action === CRUD_ACTIONS.EDIT && this.state.previewAvaUrl && (
+                                        {(action === CRUD_ACTIONS.EDIT || action === CRUD_ACTIONS.CREATE) && previewAvaUrl && (
                                             <button className="btn btn-danger" onClick={() => this.handleDelAva()}>
                                                 <FormattedMessage id='manage-user.del-avatar' />
                                             </button>

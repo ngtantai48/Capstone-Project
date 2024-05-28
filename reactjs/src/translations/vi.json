@@ -56,5 +56,9 @@
         "save": "Lưu thông tin",
         "cancel": "Huỷ",
         "del-avatar": "Xoá ảnh"
+    },
+    "homepage": {
+        "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
+        "see-more": "Xem thêm"
     }
 }
