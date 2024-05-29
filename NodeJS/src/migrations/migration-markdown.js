@@ -10,9 +10,11 @@ module.exports = {
                 defaultValue: Sequelize.UUIDV4
             },
             contentHTML: {
+                allowNull: false,
                 type: Sequelize.TEXT('long')
             },
             contentMarkdown: {
+                allowNull: false,
                 type: Sequelize.TEXT('long')
             },
             description: {
@@ -20,14 +22,13 @@ module.exports = {
                 type: Sequelize.TEXT('long')
             },
             doctorId: {
-                allowNull: true,
-                type: Sequelize.STRING
+                type: Sequelize.UUID
             },
             specialtyId: {
-                type: Sequelize.STRING
+                type: Sequelize.UUID
             },
             clinicId: {
-                type: Sequelize.STRING
+                type: Sequelize.UUID
             },
             createdAt: {
                 allowNull: false,
