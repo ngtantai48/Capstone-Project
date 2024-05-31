@@ -1,0 +1,47 @@
+.doctor-detail-container {
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    font-family: Montserrat, sans-serif !important;
+    height: 500px;
+
+    .intro-doctor {
+        display: flex;
+        gap: 30px;
+        padding: 20px 330px;
+        background-color: #ffffff;
+
+        .content-left {
+            width: 20%;
+            border: 1px solid grey;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 10px 20px;
+        }
+
+        .content-right {
+            width: 55%;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+
+            .up {
+                font-size: 25px;
+                font-weight: 600;
+            }
+
+            .down {
+                padding-top: 10px;
+            }
+        }
+    }
+
+    .detail-info-doctor {
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        border: 1px solid #cccccc;
+        padding: 20px 360px;
+        background-color: #f9f9f9;
+    }
+}

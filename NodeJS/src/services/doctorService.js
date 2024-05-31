@@ -1,4 +1,5 @@
 import db from "../models/index";
+import { Buffer } from 'buffer';
 
 
 let getTopDoctorHome = (limitInput) => {
@@ -93,15 +94,21 @@ let getDetailDoctorById = (inputId) => {
                         id: inputId
                     },
                     attributes: {
-                        exclude: ['password', 'image']
+                        exclude: ['password']
                     },
                     include: [
                         { model: db.Markdown, attributes: ['description', 'contentHTML', 'contentMarkdown'] },
-                        { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] }
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] }
                     ],
                     nest: true,
-                    raw: true
+                    raw: false
                 })
+
+                if (data && data.image) {
+                    data.image = new Buffer.from(data.image, 'base64').toString('binary');
+                }
+
+                if (!data) data = {};
 
                 resolve({
                     errCode: 0,

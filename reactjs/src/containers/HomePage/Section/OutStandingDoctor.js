@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import * as actions from "../../../store/actions"
 import { LANGUAGES } from "../../../utils";
 import { Buffer } from 'buffer';
+import { withRouter } from 'react-router';
 
 class OutStandingDoctor extends Component {
     constructor(props) {
@@ -26,6 +27,12 @@ class OutStandingDoctor extends Component {
         }
     }
 
+    handleViewDetailDoctor = (doctor) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-doctor/${doctor.id}`)
+        }
+    }
+
     render() {
         // console.log('check topDoctorsRedux: ', this.props.topDoctorsRedux)
         let arrDoctors = this.state.arrDoctors;
@@ -42,12 +49,12 @@ class OutStandingDoctor extends Component {
                             {arrDoctors && arrDoctors.length > 0 && arrDoctors.map((item, index) => {
                                 let imageBase64 = '';
                                 if (item.image) {
-                                    imageBase64 = new Buffer(item.image, 'base64').toString('binary');
+                                    imageBase64 = new Buffer.from(item.image, 'base64').toString('binary');
                                 }
                                 let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
                                 let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
                                 return (
-                                    <div className='section-customize' key={index}>
+                                    <div className='section-customize' key={index} onClick={() => this.handleViewDetailDoctor(item)}>
                                         <div className='customize-border'>
                                             <div className='outer-bg'>
                                                 <div
@@ -85,4 +92,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor));
