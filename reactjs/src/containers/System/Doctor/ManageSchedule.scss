@@ -23,6 +23,10 @@
                     margin-right: 15px;
                     background-color: white;
 
+                    &.active {
+                        background-color: #ffc107;
+                    }
+
                     &:active {
                         transform: scale(0.95);
                     }
