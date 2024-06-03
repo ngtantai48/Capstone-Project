@@ -18,7 +18,7 @@ class ManageDoctor extends Component {
         this.state = {
             contentMarkdown: '',
             contentHTML: '',
-            selectedDoctor: '',
+            selectedOption: '',
             description: '',
             hasOldData: false,
 
@@ -89,22 +89,22 @@ class ManageDoctor extends Component {
 
     handleSaveContentMarkdown = () => {
         let { hasOldData } = this.state;
-        if (this.state.selectedDoctor && this.state.selectedDoctor.value) {
+        if (this.state.selectedOption && this.state.selectedOption.value) {
             this.props.saveDetailDoctorRedux({
                 contentHTML: this.state.contentHTML,
                 contentMarkdown: this.state.contentMarkdown,
                 description: this.state.description,
-                doctorId: this.state.selectedDoctor.value,
+                doctorId: this.state.selectedOption.value,
                 action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE
             });
         }
     }
 
-    handleChangeSelect = async (selectedDoctor) => {
+    handleChangeSelect = async (selectedOption) => {
         this.setState({
-            selectedDoctor
+            selectedOption
         });
-        let res = await getDetailInfoDoctor(selectedDoctor.value);
+        let res = await getDetailInfoDoctor(selectedOption.value);
         if (res && res.errCode === 0 && res.data.Markdown) {
             let markdown = res.data.Markdown
             this.setState({
@@ -131,7 +131,7 @@ class ManageDoctor extends Component {
     }
 
     render() {
-        const { selectedDoctor, description, listDoctors, hasOldData } = this.state;
+        const { selectedOption, description, listDoctors, hasOldData } = this.state;
         return (
             <div className='manage-doctor-container'>
                 <div className='manage-doctor-title'>Tạo thêm thông tin bác sĩ</div>
@@ -140,7 +140,7 @@ class ManageDoctor extends Component {
                         <label>Chọn bác sĩ</label>
                         <Select
                             className='mt-2'
-                            value={selectedDoctor}
+                            value={selectedOption}
                             onChange={this.handleChangeSelect}
                             options={listDoctors}
                         />

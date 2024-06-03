@@ -65,7 +65,7 @@ class Login extends Component {
   }
 
   handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.keyCode === 13) {
       this.handleLogin();
     }
   }
@@ -84,7 +84,7 @@ class Login extends Component {
                 className='form-control'
                 placeholder='Enter your email'
                 onChange={(event) => this.handleOnChangeEmail(event)}
-                onKeyDown={this.handleKeyDown}
+                onKeyDown={(event) => this.handleKeyDown(event)}
               ></input>
             </div>
             <div className='col-12 form-group login-input'>
