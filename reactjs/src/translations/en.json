@@ -64,6 +64,13 @@
         "outstanding-doctor": "Last week's featured doctor",
         "see-more": "See More"
     },
+    "detail-doctor": {
+        "title": "Create more information for doctors",
+        "choose-doctor": "Choose Doctor",
+        "introduction": "Doctor's introduction",
+        "create-info": "Create information",
+        "save-info": "Save information"
+    },
     "manage-schedule": {
         "title": "Manage doctor's examination plan",
         "choose-doctor": "Choose Doctor",

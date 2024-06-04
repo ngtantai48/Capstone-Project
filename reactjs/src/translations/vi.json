@@ -64,7 +64,14 @@
         "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
         "see-more": "Xem thêm"
     },
-    "manage-schedule":{
+    "detail-doctor": {
+        "title": "Tạo thêm thông tin chi tiết bác sĩ",
+        "choose-doctor": "Chọn bác sĩ",
+        "introduction": "Thông tin chi tiết",
+        "create-info": "Tạo thông tin",
+        "save-info": "Lưu thông tin"
+    },
+    "manage-schedule": {
         "title": "Quản lí kế hoạch khám bệnh của bác sĩ",
         "choose-doctor": "Chọn bác sĩ",
         "choose-date": "Chọn ngày",

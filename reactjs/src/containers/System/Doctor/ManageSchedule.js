@@ -8,7 +8,8 @@ import { CRUD_ACTIONS, LANGUAGES, dateFormat } from '../../../utils';
 import DatePicker from '../../../components/Input/DatePicker';
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import _, { range } from 'lodash'
+import _ from 'lodash';
+import { saveBulkScheduleDoctor } from '../../../services/userService';
 
 class ManageSchedule extends Component {
     constructor(props) {
@@ -28,14 +29,17 @@ class ManageSchedule extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.allDoctors !== this.props.allDoctors) {
-            let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
+        let { allDoctors, language, allScheduleTime } = this.props;
+
+        if (prevProps.allDoctors !== allDoctors || prevProps.language !== language) {
+            let dataSelect = this.buildDataInputSelect(allDoctors)
             this.setState({
                 listDoctors: dataSelect
             })
         }
-        if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
-            let data = this.props.allScheduleTime;
+
+        if (prevProps.allScheduleTime !== allScheduleTime) {
+            let data = allScheduleTime;
             if (data && data.length > 0) {
                 data = data.map(item => ({
                     ...item,
@@ -46,18 +50,12 @@ class ManageSchedule extends Component {
                 rangeTime: data
             })
         }
-
-        // if (prevProps.language !== this.props.language) {
-        //     let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
-        //     this.setState({
-        //         listDoctors: dataSelect
-        //     })
-        // }
     }
 
     buildDataInputSelect = (inputData) => {
         let result = [];
         let { language } = this.props;
+
         if (inputData && inputData.length > 0) {
             inputData.forEach((item) => {
                 let object = {};
@@ -86,6 +84,7 @@ class ManageSchedule extends Component {
 
     handleClickBtnTime = (time) => {
         let { rangeTime } = this.state;
+
         if (rangeTime && rangeTime.length > 0) {
             rangeTime = rangeTime.map((item) => {
                 if (item.id === time.id) {
@@ -99,29 +98,29 @@ class ManageSchedule extends Component {
         }
     }
 
-    handleSaveSchedule = () => {
+    handleSaveSchedule = async () => {
         let { rangeTime, selectedDoctor, currentDate } = this.state;
         let result = [];
 
         if (selectedDoctor && _.isEmpty(selectedDoctor)) {
             if (this.props.language === LANGUAGES.EN) {
-                toast.error("Invalid selected doctor!");
+                toast.error("Invalid selected doctor !");
             } else {
-                toast.error("Bác sĩ chọn không hợp lệ!");
+                toast.error("Bác sĩ không hợp lệ !");
             }
             return;
         }
 
         if (!currentDate) {
             if (this.props.language === LANGUAGES.EN) {
-                toast.error("Invalid date!");
+                toast.error("Invalid date !");
             } else {
-                toast.error("Ngày không hợp lệ!");
+                toast.error("Ngày không hợp lệ !");
             }
             return;
         }
 
-        let formarttedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER)
+        let formattedDate = new Date(currentDate).getTime();
 
         if (rangeTime && rangeTime.length > 0) {
             let selectedTime = rangeTime.filter((item) => item.isSelected === true)
@@ -129,22 +128,41 @@ class ManageSchedule extends Component {
                 selectedTime.map((schedule) => {
                     let object = {}
                     object.doctorId = selectedDoctor.value;
-                    object.date = formarttedDate;
-                    object.time = schedule.keyMap;
+                    object.date = formattedDate;
+                    object.timeType = schedule.keyMap;
                     result.push(object);
 
                     return schedule;
                 });
             } else {
-                toast.error(`Invalid selected time!`)
+                toast.error(`Invalid selected time !`)
             }
         }
-        console.log('result: ', result)
+
+        let res = await saveBulkScheduleDoctor({
+            arrSchedule: result,
+            doctorId: selectedDoctor.value,
+            formattedDate: formattedDate
+        });
+
+        if (res && res.errCode === 0) {
+            if (this.props.language === LANGUAGES.EN) {
+                toast.success("Save schedule succeed !");
+            } else {
+                toast.success("Lưu lịch khám thành công !");
+            }
+        } else {
+            if (this.props.language === LANGUAGES.EN) {
+                toast.error("Save schedule failed !");
+            } else {
+                toast.error("Lưu lịch khám thất bại !");
+            }
+        }
     }
 
     render() {
-        const { listDoctors, selectedDoctor, rangeTime } = this.state;
-        const { language } = this.props
+        let { listDoctors, selectedDoctor, rangeTime } = this.state;
+        let { language } = this.props
 
         return (
             <div className='manage-schedule-container'>

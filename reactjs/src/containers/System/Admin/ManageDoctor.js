@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ManageDoctor.scss';
+import { FormattedMessage } from 'react-intl'
 import * as actions from '../../../store/actions';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
@@ -50,6 +51,7 @@ class ManageDoctor extends Component {
     buildDataInputSelect = (inputData) => {
         let result = [];
         let { language } = this.props;
+        console.log('check props language: ', language)
         if (inputData && inputData.length > 0) {
             inputData.forEach((item) => {
                 let object = {};
@@ -131,13 +133,13 @@ class ManageDoctor extends Component {
     }
 
     render() {
-        const { selectedOption, description, listDoctors, hasOldData } = this.state;
+        let { selectedOption, description, listDoctors, hasOldData } = this.state;
         return (
             <div className='manage-doctor-container'>
-                <div className='manage-doctor-title'>Tạo thêm thông tin bác sĩ</div>
+                <div className='manage-doctor-title'><FormattedMessage id='detail-doctor.title' /></div>
                 <div className='more-infor my-5'>
                     <div className='content-left'>
-                        <label>Chọn bác sĩ</label>
+                        <label><FormattedMessage id='detail-doctor.choose-doctor' /></label>
                         <Select
                             className='mt-2'
                             value={selectedOption}
@@ -146,7 +148,7 @@ class ManageDoctor extends Component {
                         />
                     </div>
                     <div className='content-right'>
-                        <label>Thông tin giới thiệu</label>
+                        <label><FormattedMessage id='detail-doctor.introduction' /></label>
                         <textarea
                             className='form-control mt-2'
                             rows={4}
@@ -170,7 +172,7 @@ class ManageDoctor extends Component {
                         onClick={() => this.handleSaveContentMarkdown()}
                     >
                         {hasOldData === true ?
-                            <span>Lưu thông tin</span> : <span>Tạo thông tin</span>
+                            <span><FormattedMessage id='detail-doctor.save-info' /></span> : <span><FormattedMessage id='detail-doctor.create-info' /></span>
                         }
                     </button>
                 </div>

@@ -141,6 +141,8 @@ class DatePicker extends Component {
         const { value, onChange, minDate, onClose, ...otherProps } = this.props;
         const options = {
             dateFormat: this.DISPLAY_FORMAT,
+            enableTime: true,
+            time_24hr: true,
             allowInput: true,
             disableMobile: true,
             onClose: onClose,
