@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.doctor-schedule-container {
+
+    .all-schedule {
+        .form-select {
+            max-width: 170px;
+            min-width: 150px;
+            cursor: pointer;
+
+            &:hover {
+                border-color: #888888;
+            }
+        }
+    }
+
+}

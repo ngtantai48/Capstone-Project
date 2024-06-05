@@ -137,6 +137,12 @@ class DatePicker extends Component {
     // dat.nt : Format ngày hiển thị
     DISPLAY_FORMAT = "d/m/Y";
 
+    handleChange = (selectedDates, dateStr, instance) => {
+        const { onChange } = this.props;
+        onChange(selectedDates);
+        this.close();
+    }
+
     render() {
         const { value, onChange, minDate, onClose, ...otherProps } = this.props;
         const options = {
@@ -146,7 +152,8 @@ class DatePicker extends Component {
             allowInput: true,
             disableMobile: true,
             onClose: onClose,
-            onOpen: this.onOpen
+            onOpen: this.onOpen,
+            onChange: this.handleChange
         };
         if (minDate) {
             options.minDate = minDate;
@@ -155,7 +162,7 @@ class DatePicker extends Component {
             <Flatpickr
                 ref={this.nodeRef}
                 value={value}
-                onChange={onChange}
+                onChange={this.handleChange}
                 options={options}
                 // render={
                 //     ({ defaultValue, value, ...props }, ref) => {
