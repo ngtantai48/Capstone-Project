@@ -9,6 +9,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
 import { CRUD_ACTIONS, LANGUAGES } from '../../../utils';
 import { getDetailInfoDoctor } from '../../../services/userService';
+import { remove as removeDiacritics } from 'diacritics';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -31,23 +32,6 @@ class ManageDoctor extends Component {
         await this.props.fetchAllDoctorsRedux();
     }
 
-    // buildDataInputSelect = (inputData) => {
-    //     let result = [];
-    //     let { language } = this.props;
-    //     if (inputData && inputData.length > 0) {
-    //         inputData.map((item, index) => {
-    //             let object = {};
-    //             let labelVi = `${item.lastName} ${item.firstName}`
-    //             let labelEn = `${item.firstName} ${item.lastName}`
-
-    //             object.label = language === LANGUAGES.VI ? labelVi : labelEn;
-    //             object.value = item.id;
-    //             result.push(object)
-    //         })
-    //     }
-    //     return result;
-    // }
-
     buildDataInputSelect = (inputData) => {
         let result = [];
         let { language } = this.props;
@@ -56,7 +40,7 @@ class ManageDoctor extends Component {
             inputData.forEach((item) => {
                 let object = {};
                 let labelVi = `${item.lastName} ${item.firstName}`;
-                let labelEn = `${item.firstName} ${item.lastName}`;
+                let labelEn = removeDiacritics(`${item.firstName} ${item.lastName}`);
 
                 object.label = language === LANGUAGES.VI ? labelVi : labelEn;
                 object.value = item.id;

@@ -10,6 +10,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 import { saveBulkScheduleDoctor } from '../../../services/userService';
+import { remove as removeDiacritics } from 'diacritics';
 
 class ManageSchedule extends Component {
     constructor(props) {
@@ -60,7 +61,7 @@ class ManageSchedule extends Component {
             inputData.forEach((item) => {
                 let object = {};
                 let labelVi = `${item.lastName} ${item.firstName}`;
-                let labelEn = `${item.firstName} ${item.lastName}`;
+                let labelEn = removeDiacritics(`${item.firstName} ${item.lastName}`);
 
                 object.label = language === LANGUAGES.VI ? labelVi : labelEn;
                 object.value = item.id;

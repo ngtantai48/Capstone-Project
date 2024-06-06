@@ -142,6 +142,55 @@ let getDetailDoctorById = (inputId) => {
     })
 }
 
+// let bulkCreateScheduleService = (data) => {
+//     return new Promise(async (resolve, reject) => {
+//         try {
+//             if (!data || !data.arrSchedule || !data.doctorId || !data.formattedDate) {
+//                 resolve({
+//                     errCode: 1,
+//                     errMessage: `Missing required parameters !`
+//                 });
+//             } else {
+//                 let schedule = data.arrSchedule;
+
+//                 if (schedule && schedule.length > 0) {
+//                     schedule = schedule.map((item) => {
+//                         item.maxNumber = MAX_NUMBER_SCHEDULE;
+//                         return item;
+//                     })
+//                 }
+
+//                 let existing = await db.Schedule.findAll({
+//                     where: {
+//                         doctorId: data.doctorId,
+//                         date: data.formattedDate
+//                     },
+//                     attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
+//                 });
+
+
+
+//                 // compare different
+//                 let toCreate = _.differenceWith(schedule, existing, (a, b) => {
+//                     return a.timeType === b.timeType && +a.date === +b.date;
+//                 });
+//                 console.log('check different: ', toCreate)
+
+//                 //create data
+//                 if (toCreate && toCreate.length > 0) {
+//                     await db.Schedule.bulkCreate(toCreate);
+//                 }
+//                 resolve({
+//                     errCode: 0,
+//                     errMessage: `OK`
+//                 })
+//             }
+//         } catch (error) {
+//             reject(error)
+//         }
+//     })
+// }
+
 let bulkCreateScheduleService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -151,51 +200,57 @@ let bulkCreateScheduleService = (data) => {
                     errMessage: `Missing required parameters !`
                 });
             } else {
-                let schedule = data.arrSchedule;
+                let newSchedules = data.arrSchedule;
 
-                if (schedule && schedule.length > 0) {
-                    schedule = schedule.map((item) => {
+                if (newSchedules && newSchedules.length > 0) {
+                    newSchedules = newSchedules.map((item) => {
                         item.maxNumber = MAX_NUMBER_SCHEDULE;
                         return item;
-                    })
+                    });
                 }
 
-                let existing = await db.Schedule.findAll({
+                // Truy vấn các lịch trình hiện có từ DB
+                let existingSchedules = await db.Schedule.findAll({
                     where: {
                         doctorId: data.doctorId,
                         date: data.formattedDate
                     },
-                    attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
+                    attributes: ['id', 'timeType', 'date', 'doctorId', 'maxNumber'],
+                    raw: true
                 });
 
-                // convert date
-                if (existing && existing.length > 0) {
-                    existing = existing.map((item) => {
-                        item.date = new Date(item.date).getTime();
-                        return item;
-                    })
-                }
-
-                // compare different
-                let toCreate = _.differenceWith(schedule, existing, (a, b) => {
+                // Xác định những khoảng thời gian cần xóa
+                let toDelete = _.differenceWith(existingSchedules, newSchedules, (a, b) => {
                     return a.timeType === b.timeType && +a.date === +b.date;
                 });
-                console.log('check different: ', toCreate)
 
-                //create data
+                // Xóa các khoảng thời gian cần thiết
+                if (toDelete && toDelete.length > 0) {
+                    let idsToDelete = toDelete.map(schedule => schedule.id);
+                    await db.Schedule.destroy({ where: { id: idsToDelete } });
+                }
+
+                // Xác định những khoảng thời gian cần thêm mới
+                let toCreate = _.differenceWith(newSchedules, existingSchedules, (a, b) => {
+                    return a.timeType === b.timeType && +a.date === +b.date;
+                });
+
+                // Thêm các khoảng thời gian mới
                 if (toCreate && toCreate.length > 0) {
                     await db.Schedule.bulkCreate(toCreate);
                 }
+
                 resolve({
                     errCode: 0,
                     errMessage: `OK`
-                })
+                });
             }
         } catch (error) {
-            reject(error)
+            reject(error);
         }
-    })
+    });
 }
+
 
 let getScheduleByDateService = (doctorId, date) => {
     return new Promise(async (resolve, reject) => {
@@ -211,6 +266,16 @@ let getScheduleByDateService = (doctorId, date) => {
                         doctorId: doctorId,
                         date: date
                     },
+                    include: [
+                        {
+                            model: db.Allcode,
+                            as: 'timeTypeData',
+                            attributes: ['valueEn', 'valueVi']
+                        },
+                    ],
+                    order: [['timeType', 'ASC']],
+                    raw: false,
+                    nest: true
                 })
 
                 if (!dataSchedule) {

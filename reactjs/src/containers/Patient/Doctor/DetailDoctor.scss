@@ -9,8 +9,6 @@
         flex-wrap: wrap;
         gap: 15px;
         background-color: #ffffff;
-        padding: 20px 0;
-        border-bottom: 1px solid #cccccc;
         justify-content: center;
 
         .content-left {
@@ -44,20 +42,19 @@
 
 
     .schedule-doctor {
-        height: 200px;
-        border: 1px solid red;
+        height: 300px;
         display: flex;
         justify-content: center;
         text-align: justify;
+        margin-top: 20px;
 
         .content-left {
-            width: 30%;
-            padding: 10px;
+            width: 35%;
         }
 
         .content-right {
-            width: 30%;
-            padding: 10px;
+            width: 25%;
+            border-left: 1px solid #eeeeee;
         }
     }
 

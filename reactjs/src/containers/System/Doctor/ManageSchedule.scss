@@ -18,10 +18,13 @@
             }
 
             .pick-hour-container {
-
                 .btn-schedule {
                     margin-right: 15px;
                     background-color: white;
+
+                    &:hover {
+                        background-color: #e2c05b;
+                    }
 
                     &.active {
                         background-color: #ffc107;

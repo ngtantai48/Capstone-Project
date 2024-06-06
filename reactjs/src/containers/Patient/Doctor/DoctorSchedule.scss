@@ -1,12 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 .doctor-schedule-container {
+    // border: 1px solid red;
+    height: 100%;
 
     .all-schedule {
         .form-select {
             max-width: 170px;
             min-width: 150px;
             cursor: pointer;
+            font-weight: 600;
+            color: #337ab7;
 
             &:hover {
                 border-color: #888888;
@@ -14,4 +18,30 @@
         }
     }
 
+    .all-available-time {
+        color: #333;
+
+        .text-calendar {}
+
+        .time-content {
+            button {
+                min-width: 150px;
+                padding: 10px 0;
+                background-color: #fff04b;
+                color: #333;
+                border: none;
+                outline: none;
+                font-weight: 600;
+
+                &:hover {
+                    background-color: #45c3d2;
+                    color: #fff;
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+            }
+        }
+    }
 }
