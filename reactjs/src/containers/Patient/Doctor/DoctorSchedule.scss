@@ -21,7 +21,12 @@
     .all-available-time {
         color: #333;
 
-        .text-calendar {}
+        .text-calendar {
+            span {
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+        }
 
         .time-content {
             button {
@@ -41,6 +46,10 @@
                 &:active {
                     transform: scale(0.95);
                 }
+            }
+
+            .no-schedule{
+                font-style: italic;
             }
         }
     }

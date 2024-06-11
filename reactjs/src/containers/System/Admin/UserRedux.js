@@ -214,13 +214,9 @@ class UserRedux extends Component {
         })
     }
 
-
     render() {
-        const { genderArr, positionArr, roleArr } = this.state
-        // console.log('check props from redux: ', this.state)
-        // let isGetGenders = this.props.isLoadingGender;
-
-        const { email, password, firstName, lastName, phoneNumber, address, gender, position, role, previewAvaUrl, action } = this.state
+        const { genderArr, roleArr, positionArr } = this.state;
+        const { email, password, firstName, lastName, phoneNumber, address, gender, position, role, previewAvaUrl, action } = this.state;
 
         return (
             <div className='user-redux-container'>
@@ -298,18 +294,20 @@ class UserRedux extends Component {
                                 </select>
                             </div>
                             <div className='col-3 my-3'>
-                                <label><FormattedMessage id='manage-user.position' /></label>
-                                <select className="form-select" onChange={(event) => this.onChangeInput(event, 'position')} value={position}>
-                                    {this.renderSelectOptions(positionArr)}
-                                </select>
-                            </div>
-                            <div className='col-3 my-3'>
                                 <label><FormattedMessage id='manage-user.role' /></label>
                                 <select className="form-select" onChange={(event) => this.onChangeInput(event, 'role')} value={role}>
                                     {this.renderSelectOptions(roleArr)}
                                 </select>
                             </div>
-                            <div className='col-3 my-3'>
+                            {role && role === 'R2' &&
+                                <div className='col-3 my-3'>
+                                    <label><FormattedMessage id='manage-user.position' /></label>
+                                    <select className="form-select" onChange={(event) => this.onChangeInput(event, 'position')} value={position}>
+                                        {this.renderSelectOptions(positionArr)}
+                                    </select>
+                                </div>
+                            }
+                            <div className='col-12 my-3'>
                                 <label><FormattedMessage id='manage-user.avatar' /></label>
                                 <div className='preview-avatar-container'>
                                     <input
@@ -320,13 +318,13 @@ class UserRedux extends Component {
                                         accept="image/*"
                                         onChange={(event) => { this.handleOnChangeAvatar(event) }}
                                     />
-                                    <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex justify-content-between align-items-center" style={{ width: '20%' }}>
                                         <label className="label-upload" htmlFor="previewAva">
                                             <FormattedMessage id='manage-user.upload-avatar' />
                                             <i className="fa-solid fa-upload ms-1"></i>
                                         </label>
                                         {(action === CRUD_ACTIONS.EDIT || action === CRUD_ACTIONS.CREATE) && previewAvaUrl && (
-                                            <button className="btn btn-danger" onClick={() => this.handleDelAva()}>
+                                            <button className="delete-ava btn btn-danger" onClick={() => this.handleDelAva()}>
                                                 <FormattedMessage id='manage-user.del-avatar' />
                                             </button>
                                         )}
@@ -338,7 +336,7 @@ class UserRedux extends Component {
                                     ></div>
                                 </div>
                             </div>
-                            <div className='col-12 my-3'>
+                            <div className='col-12 my-5'>
                                 <button
                                     className={this.state.action === CRUD_ACTIONS.EDIT ? 'btn btn-warning' : 'btn btn-primary'}
                                     onClick={() => this.handleSaveUser()}

@@ -42,11 +42,11 @@
 
 
     .schedule-doctor {
-        height: 300px;
         display: flex;
         justify-content: center;
         text-align: justify;
         margin-top: 20px;
+        min-height: 230px;
 
         .content-left {
             width: 35%;

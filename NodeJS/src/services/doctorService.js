@@ -1,7 +1,8 @@
 import db from "../models/index";
 import { Buffer } from 'buffer';
 require('dotenv').config();
-import _ from 'lodash'
+import _ from 'lodash';
+const { Op } = require('sequelize');
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -142,55 +143,6 @@ let getDetailDoctorById = (inputId) => {
     })
 }
 
-// let bulkCreateScheduleService = (data) => {
-//     return new Promise(async (resolve, reject) => {
-//         try {
-//             if (!data || !data.arrSchedule || !data.doctorId || !data.formattedDate) {
-//                 resolve({
-//                     errCode: 1,
-//                     errMessage: `Missing required parameters !`
-//                 });
-//             } else {
-//                 let schedule = data.arrSchedule;
-
-//                 if (schedule && schedule.length > 0) {
-//                     schedule = schedule.map((item) => {
-//                         item.maxNumber = MAX_NUMBER_SCHEDULE;
-//                         return item;
-//                     })
-//                 }
-
-//                 let existing = await db.Schedule.findAll({
-//                     where: {
-//                         doctorId: data.doctorId,
-//                         date: data.formattedDate
-//                     },
-//                     attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
-//                 });
-
-
-
-//                 // compare different
-//                 let toCreate = _.differenceWith(schedule, existing, (a, b) => {
-//                     return a.timeType === b.timeType && +a.date === +b.date;
-//                 });
-//                 console.log('check different: ', toCreate)
-
-//                 //create data
-//                 if (toCreate && toCreate.length > 0) {
-//                     await db.Schedule.bulkCreate(toCreate);
-//                 }
-//                 resolve({
-//                     errCode: 0,
-//                     errMessage: `OK`
-//                 })
-//             }
-//         } catch (error) {
-//             reject(error)
-//         }
-//     })
-// }
-
 let bulkCreateScheduleService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -200,6 +152,15 @@ let bulkCreateScheduleService = (data) => {
                     errMessage: `Missing required parameters !`
                 });
             } else {
+                // Xóa các lịch trình có ngày trong quá khứ
+                await db.Schedule.destroy({
+                    where: {
+                        date: {
+                            [Op.lt]: new Date().setHours(0, 0, 0, 0)
+                        }
+                    }
+                });
+
                 let newSchedules = data.arrSchedule;
 
                 if (newSchedules && newSchedules.length > 0) {
@@ -250,7 +211,6 @@ let bulkCreateScheduleService = (data) => {
         }
     });
 }
-
 
 let getScheduleByDateService = (doctorId, date) => {
     return new Promise(async (resolve, reject) => {

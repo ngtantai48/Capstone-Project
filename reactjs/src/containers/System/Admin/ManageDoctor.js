@@ -18,29 +18,40 @@ class ManageDoctor extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            // save to Markdown table
             contentMarkdown: '',
             contentHTML: '',
             selectedOption: '',
             description: '',
             hasOldData: false,
+            listDoctors: [],
 
-            listDoctors: []
+            // save to doctor_info table
+            listPrice: [],
+            listPayment: [],
+            listProvince: [],
+            selectedPrice: '',
+            selectedPayment: '',
+            selectedProvince: '',
+            nameClinic: '',
+            addressClinic: '',
+            note: ''
         }
     }
 
     async componentDidMount() {
         await this.props.fetchAllDoctorsRedux();
+        await this.props.getRequiredDoctorInfoRedux();
     }
 
-    buildDataInputSelect = (inputData) => {
+    buildDataInputSelect = (inputData, type) => {
         let result = [];
         let { language } = this.props;
-        console.log('check props language: ', language)
         if (inputData && inputData.length > 0) {
             inputData.forEach((item) => {
                 let object = {};
-                let labelVi = `${item.lastName} ${item.firstName}`;
-                let labelEn = removeDiacritics(`${item.firstName} ${item.lastName}`);
+                let labelVi = type === 'USERS' ? `${item.lastName} ${item.firstName}` : item.valueVi;
+                let labelEn = type === 'USERS' ? removeDiacritics(`${item.firstName} ${item.lastName}`) : item.valueEn;
 
                 object.label = language === LANGUAGES.VI ? labelVi : labelEn;
                 object.value = item.id;
@@ -51,17 +62,25 @@ class ManageDoctor extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.allDoctors !== this.props.allDoctors) {
-            let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
+        let { allDoctors, language, allRequiredDoctorInfo } = this.props;
+
+        if (prevProps.allDoctors !== allDoctors || prevProps.language !== language) {
+            let dataSelect = this.buildDataInputSelect(allDoctors, 'USERS')
             this.setState({
                 listDoctors: dataSelect
             })
         }
 
-        if (prevProps.language !== this.props.language) {
-            let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
+        if (prevProps.allRequiredDoctorInfo !== allRequiredDoctorInfo || prevProps.language !== language) {
+            let { resPrice, resPayment, resProvince } = allRequiredDoctorInfo
+            let dataSelectPrice = this.buildDataInputSelect(resPrice)
+            let dataSelectPayment = this.buildDataInputSelect(resPayment)
+            let dataSelectProvince = this.buildDataInputSelect(resProvince)
+
             this.setState({
-                listDoctors: dataSelect
+                listPrice: dataSelectPrice,
+                listPayment: dataSelectPayment,
+                listProvince: dataSelectProvince
             })
         }
     }
@@ -107,7 +126,6 @@ class ManageDoctor extends Component {
                 hasOldData: false
             })
         }
-        console.log('check select Doctor: ', res)
     };
 
     handleOnChangeDesc = (event) => {
@@ -116,8 +134,18 @@ class ManageDoctor extends Component {
         })
     }
 
+    handleDeleteInfo = () => {
+        this.setState({
+            contentHTML: '',
+            contentMarkdown: '',
+            description: '',
+            selectedOption: '',
+            hasOldData: false
+        })
+    }
+
     render() {
-        let { selectedOption, description, listDoctors, hasOldData } = this.state;
+        let { selectedOption, description, listDoctors, hasOldData, listPrice, listPayment, listProvince } = this.state;
         return (
             <div className='manage-doctor-container'>
                 <div className='manage-doctor-title'><FormattedMessage id='detail-doctor.title' /></div>
@@ -129,6 +157,7 @@ class ManageDoctor extends Component {
                             value={selectedOption}
                             onChange={this.handleChangeSelect}
                             options={listDoctors}
+                            placeholder={'Chon bac si'}
                         />
                     </div>
                     <div className='content-right'>
@@ -142,7 +171,51 @@ class ManageDoctor extends Component {
                         </textarea>
                     </div>
                 </div>
-                <div className='manage-doctor-editor'>
+                <div className='more-info-extra row' style={{ width: '50%' }}>
+                    <div className='col-4 form-group'>
+                        <label>Chon gia</label>
+                        <Select
+                            className='mt-2'
+                            // value={selectedOption}
+                            // onChange={this.handleChangeSelect}
+                            options={listPrice}
+                            placeholder={'Chon gia'}
+                        />
+                    </div>
+                    <div className='col-4 form-group'>
+                        <label>Chon phuong thuc thanh toan</label>
+                        <Select
+                            className='mt-2'
+                            // value={selectedOption}
+                            // onChange={this.handleChangeSelect}
+                            options={listPayment}
+                            placeholder={'Chon phuong thuc thanh toan'}
+                        />
+                    </div>
+                    <div className='col-4 form-group'>
+                        <label>Chon tinh thanh</label>
+                        <Select
+                            className='mt-2'
+                            // value={selectedOption}
+                            // onChange={this.handleChangeSelect}
+                            options={listProvince}
+                            placeholder={'Chon tinh thanh'}
+                        />
+                    </div>
+                    <div className='col-4 form-group mt-4'>
+                        <label>Ten phong kham</label>
+                        <input className='form-control mt-2'></input>
+                    </div>
+                    <div className='col-4 form-group mt-4'>
+                        <label>Dia chi phong kham</label>
+                        <input className='form-control mt-2'></input>
+                    </div>
+                    <div className='col-4 form-group mt-4'>
+                        <label>Ghi chu</label>
+                        <input className='form-control mt-2'></input>
+                    </div>
+                </div>
+                <div className='manage-doctor-editor mt-5'>
                     <MdEditor
                         style={{ height: '500px' }}
                         renderHTML={text => mdParser.render(text)}
@@ -156,11 +229,21 @@ class ManageDoctor extends Component {
                         onClick={() => this.handleSaveContentMarkdown()}
                     >
                         {hasOldData === true ?
-                            <span><FormattedMessage id='detail-doctor.save-info' /></span> : <span><FormattedMessage id='detail-doctor.create-info' /></span>
+                            <span><FormattedMessage id='detail-doctor.save-info' /></span>
+                            :
+                            <span><FormattedMessage id='detail-doctor.create-info' /></span>
                         }
                     </button>
+                    {hasOldData === true &&
+                        <button
+                            className='btn btn-secondary mx-5'
+                            onClick={() => this.handleDeleteInfo()}
+                        >
+                            <span><FormattedMessage id='detail-doctor.delete-info' /></span>
+                        </button>
+                    }
                 </div>
-            </div >
+            </div>
         );
     }
 }
@@ -169,13 +252,17 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         allDoctors: state.admin.allDoctors,
+        allRequiredDoctorInfo: state.admin.allRequiredDoctorInfo,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllDoctorsRedux: () => dispatch(actions.fetchAllDoctors()),
-        saveDetailDoctorRedux: (data) => dispatch(actions.saveDetailDoctor(data))
+        saveDetailDoctorRedux: (data) => dispatch(actions.saveDetailDoctor(data)),
+
+        getRequiredDoctorInfoRedux: () => dispatch(actions.getRequiredDoctorInfo()),
+
     };
 };
 

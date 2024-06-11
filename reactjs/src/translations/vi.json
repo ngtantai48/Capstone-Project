@@ -69,12 +69,21 @@
         "choose-doctor": "Chọn bác sĩ",
         "introduction": "Thông tin chi tiết",
         "create-info": "Tạo thông tin",
-        "save-info": "Lưu thông tin"
+        "save-info": "Lưu thông tin",
+        "delete-info": "Huỷ"
     },
     "manage-schedule": {
         "title": "Quản lí kế hoạch khám bệnh của bác sĩ",
         "choose-doctor": "Chọn bác sĩ",
         "choose-date": "Chọn ngày",
         "save": "Lưu kế hoạch"
+    },
+    "patient": {
+        "detail-doctor": {
+            "schedule": "Lịch khám",
+            "no-schedule": "Bác sĩ không có lịch hẹn khám trong thời gian này !",
+            "choose": "Chọn ",
+            "book-free": " và đặt (miễn phí)"
+        }
     }
 }
