@@ -67,10 +67,22 @@
     "detail-doctor": {
         "title": "Create more information for doctors",
         "choose-doctor": "Choose Doctor",
+        "select-doctor": "Select Doctor",
         "introduction": "Doctor's introduction",
         "create-info": "Create information",
         "save-info": "Save information",
         "delete-info": "Cancel"
+    },
+    "manage-doctor": {
+        "price": "Price",
+        "payment": "Payment",
+        "province": "Province",
+        "name-clinic": "Clinic's name",
+        "address-clinic": "Clinic's address",
+        "note": "Note",
+        "select-price": "Select price",
+        "select-payment": "Select payment",
+        "select-province": "Select province"
     },
     "manage-schedule": {
         "title": "Manage doctor's examination plan",

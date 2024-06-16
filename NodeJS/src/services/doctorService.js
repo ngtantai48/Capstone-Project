@@ -1,7 +1,7 @@
 import db from "../models/index";
 import { Buffer } from 'buffer';
 require('dotenv').config();
-import _ from 'lodash';
+import _, { includes } from 'lodash';
 const { Op } = require('sequelize');
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
@@ -62,45 +62,93 @@ let getAllDoctors = () => {
 let saveDetailInfoDoctor = (inputData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!inputData || !inputData.doctorId || !inputData.contentHTML || !inputData.contentMarkdown || !inputData.action) {
-                resolve({
-                    errCode: 1,
-                    errMessage: `Missing parameters`
-                })
-            } else {
-                if (inputData.action === 'CREATE') {
-                    await db.Markdown.create({
-                        contentHTML: inputData.contentHTML,
-                        contentMarkdown: inputData.contentMarkdown,
-                        description: inputData.description,
-                        doctorId: inputData.doctorId
-                    })
-                } else if (inputData.action === 'EDIT') {
-                    let doctorMarkdown = await db.Markdown.findOne({
-                        where: { doctorId: inputData.doctorId },
-                        raw: false
-                    })
+            const requiredFields = [
+                'doctorId',
+                'contentHTML',
+                'contentMarkdown',
+                'action',
+                'selectedPrice',
+                'selectedPayment',
+                'selectedProvince',
+                'nameClinic',
+                'addressClinic',
+                'note'
+            ];
 
-                    if (doctorMarkdown) {
-                        doctorMarkdown.contentHTML = inputData.contentHTML;
-                        doctorMarkdown.contentMarkdown = inputData.contentMarkdown;
-                        doctorMarkdown.description = inputData.description;
-                        // doctorMarkdown.updatedAt = new Date()
-
-                        await doctorMarkdown.save()
-                    }
+            for (let field of requiredFields) {
+                if (!inputData[field]) {
+                    return resolve({
+                        errCode: 1,
+                        errMessage: `Missing parameter: ${field}`
+                    });
                 }
+            }
 
-                resolve({
-                    errCode: 0,
-                    errMessage: `Save info doctor success !`
+            // upsert to Markdown
+            if (inputData.action === 'CREATE') {
+                await db.Markdown.create({
+                    contentHTML: inputData.contentHTML,
+                    contentMarkdown: inputData.contentMarkdown,
+                    description: inputData.description,
+                    doctorId: inputData.doctorId
+                });
+            } else if (inputData.action === 'EDIT') {
+                let doctorMarkdown = await db.Markdown.findOne({
+                    where: { doctorId: inputData.doctorId },
+                    raw: false
+                });
+
+                if (doctorMarkdown) {
+                    doctorMarkdown.contentHTML = inputData.contentHTML;
+                    doctorMarkdown.contentMarkdown = inputData.contentMarkdown;
+                    doctorMarkdown.description = inputData.description;
+                    // doctorMarkdown.updatedAt = new Date()
+
+                    await doctorMarkdown.save();
+                }
+            }
+
+            // upsert to Doctor_info table
+            let doctorInfo = await db.Doctor_Info.findOne({
+                where: {
+                    doctorId: inputData.doctorId
+                },
+                raw: false
+            })
+
+            if (doctorInfo) {
+                //update
+                doctorInfo.priceId = inputData.selectedPrice;
+                doctorInfo.provinceId = inputData.selectedProvince;
+                doctorInfo.paymentId = inputData.selectedPayment;
+                doctorInfo.nameClinic = inputData.nameClinic;
+                doctorInfo.addressClinic = inputData.addressClinic;
+                doctorInfo.note = inputData.note;
+
+                await doctorInfo.save()
+            } else {
+                //create
+                await db.Doctor_Info.create({
+                    doctorId: inputData.doctorId,
+                    priceId: inputData.selectedPrice,
+                    provinceId: inputData.selectedProvince,
+                    paymentId: inputData.selectedPayment,
+                    nameClinic: inputData.nameClinic,
+                    addressClinic: inputData.addressClinic,
+                    note: inputData.note,
                 })
             }
+
+            resolve({
+                errCode: 0,
+                errMessage: `Save info doctor success!`
+            });
         } catch (error) {
-            reject(error)
+            reject(error);
         }
-    })
+    });
 }
+
 
 let getDetailDoctorById = (inputId) => {
     return new Promise(async (resolve, reject) => {
@@ -120,7 +168,18 @@ let getDetailDoctorById = (inputId) => {
                     },
                     include: [
                         { model: db.Markdown, attributes: ['description', 'contentHTML', 'contentMarkdown'] },
-                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] }
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                        {
+                            model: db.Doctor_Info,
+                            attributes: {
+                                exclude: ['id', 'doctorId']
+                            },
+                            include: [
+                                { model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi'] },
+                            ]
+                        },
                     ],
                     nest: true,
                     raw: false

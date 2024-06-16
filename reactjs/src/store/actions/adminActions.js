@@ -354,5 +354,3 @@ export const fetchRequiredDoctorInfoSuccess = (allRequiredData) => ({
 export const fetchRequiredDoctorInfoFailed = () => ({
     type: actionTypes.FETCH_REQUIRED_DOCTOR_INFO_FAILED
 })
-
-//start doing end
