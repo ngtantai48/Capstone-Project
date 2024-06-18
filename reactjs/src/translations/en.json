@@ -96,6 +96,13 @@
             "no-schedule": "The doctor does not have appointments available at this time !",
             "choose": "Choose ",
             "book-free": " and book (free)"
+        },
+        "extra-info-doctor": {
+            "text-address": "Medical examination address",
+            "price": "Examination fee: ",
+            "detail": "See details",
+            "payment": "Patient can pay the cost by: ",
+            "hide-price": "Hide price"
         }
     }
 }
