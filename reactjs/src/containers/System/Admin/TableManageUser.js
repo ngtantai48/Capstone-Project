@@ -17,8 +17,6 @@ function handleEditorChange({ html, text }) {
     console.log('handleEditorChange', html, text);
 }
 
-
-
 class TableManageUser extends Component {
     constructor(props) {
         super(props);

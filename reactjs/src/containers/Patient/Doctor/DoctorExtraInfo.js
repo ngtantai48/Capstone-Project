@@ -5,10 +5,8 @@ import { FormattedMessage } from 'react-intl'
 import { LANGUAGES } from '../../../utils';
 import { getExtraInfoDoctorById } from '../../../services/userService';
 import { NumericFormat } from 'react-number-format';
-import { lang } from 'moment';
 
 class DoctorExtraInfo extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -46,8 +44,7 @@ class DoctorExtraInfo extends Component {
 
     render() {
         let { isShowDetailInfo, extraInfo } = this.state;
-        let { language } = this.props
-        console.log('check state: ', this.state);
+        let { language } = this.props;
 
         return (
             <div className='doctor-extra-info-container'>
@@ -83,7 +80,6 @@ class DoctorExtraInfo extends Component {
                                         suffix=' $'
                                     />
                                 }
-
                             </div>
                             <div className='show-price'>
                                 <span onClick={() => this.showHideDetailInfo(true)}>
@@ -130,9 +126,6 @@ class DoctorExtraInfo extends Component {
                             </div>
                         </>
                     }
-
-
-
                 </div>
             </div>
         );

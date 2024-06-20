@@ -133,6 +133,20 @@ class ManageDoctor extends Component {
                 addressClinic: this.state.addressClinic,
                 note: this.state.note
             });
+
+            this.setState({
+                contentHTML: '',
+                contentMarkdown: '',
+                description: '',
+                selectedOption: '',
+                hasOldData: false,
+                selectedPrice: '',
+                selectedPayment: '',
+                selectedProvince: '',
+                nameClinic: '',
+                addressClinic: '',
+                note: ''
+            })
         }
     }
 
