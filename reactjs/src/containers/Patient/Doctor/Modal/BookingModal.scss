@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .booking-modal-container {
+    font-family: Montserrat, sans-serif !important;
+
     .booking-modal-content {
-        height: 500px;
         display: flex;
         flex-direction: column;
 
@@ -28,6 +31,10 @@
         .booking-modal-body {
             padding: 30px;
             height: 100%;
+
+            .price {
+                margin: 15px 0;
+            }
         }
 
         .booking-modal-footer {

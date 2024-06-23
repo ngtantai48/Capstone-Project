@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl'
 // import { LANGUAGES } from '../../../utils';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './BookingModal.scss'
+import ProfileDoctor from '../ProfileDoctor';
+import _ from 'lodash'
 
 class BookingModal extends Component {
     constructor(props) {
@@ -26,6 +28,7 @@ class BookingModal extends Component {
 
     render() {
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
+        let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : '';
 
         return (
             <div>
@@ -46,37 +49,38 @@ class BookingModal extends Component {
                         <div className='booking-modal-body'>
                             {/* {JSON.stringify(dataTime)} */}
                             <div className='doctor-info'>
-
-                            </div>
-                            <div className='price'>
-                                Gia kham 500.000 VND
+                                <ProfileDoctor
+                                    doctorId={doctorId}
+                                    isShowDescriptionDoctor={false}
+                                    dataTime={dataTime}
+                                />
                             </div>
                             <div className='row'>
-                                <div className='col-6 form-group'>
+                                <div className='col-6 form-group mt-4'>
                                     <label>Ho ten</label>
                                     <input className='form-control'></input>
                                 </div>
-                                <div className='col-6 form-group'>
+                                <div className='col-6 form-group mt-4'>
                                     <label>So dien thoai</label>
                                     <input className='form-control'></input>
                                 </div>
-                                <div className='col-6 form-group'>
+                                <div className='col-6 form-group mt-4'>
                                     <label>Dia chi email</label>
                                     <input className='form-control'></input>
                                 </div>
-                                <div className='col-6 form-group'>
+                                <div className='col-6 form-group mt-4'>
                                     <label>Dia chi lien he</label>
                                     <input className='form-control'></input>
                                 </div>
-                                <div className='col-6 form-group'>
+                                <div className='col-6 form-group mt-4'>
                                     <label>Ly do kham</label>
                                     <input className='form-control'></input>
                                 </div>
-                                <div className='col-6 form-group'>
+                                <div className='col-6 form-group mt-4'>
                                     <label>Dat cho ai</label>
                                     <input className='form-control'></input>
                                 </div>
-                                <div className='col-6 form-group'>
+                                <div className='col-6 form-group mt-4'>
                                     <label>Gioi tinh</label>
                                     <input className='form-control'></input>
                                 </div>

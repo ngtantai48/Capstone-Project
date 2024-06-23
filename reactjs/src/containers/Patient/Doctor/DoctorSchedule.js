@@ -48,7 +48,7 @@ class DoctorSchedule extends Component {
                 if (language === LANGUAGES.VI) {
                     object.label = this.capitalizeFirstLetter(day.format('dddd - DD/MM'));
                 } else {
-                    object.label = this.capitalizeFirstLetter(day.locale('en').format('ddd - DD/MM'));
+                    object.label = day.locale('en').format('ddd - DD/MM');
                 }
             }
 
@@ -83,7 +83,6 @@ class DoctorSchedule extends Component {
             let doctorId = this.props.doctorIdFromParent;
             let date = event.target.value;
             let res = await getScheduleDoctorByDate(doctorId, date);
-            // console.log('check res react: ', res)
 
             if (res && res.errCode === 0) {
                 this.setState({

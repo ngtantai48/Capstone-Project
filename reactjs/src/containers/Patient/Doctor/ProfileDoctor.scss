@@ -1,0 +1,45 @@
+.profile-doctor-container {
+
+    .intro-doctor {
+        display: flex;
+        gap: 15px;
+        background-color: #ffffff;
+        justify-content: flex-start;
+        // align-items: center;
+
+        .content-left {
+            border: 1px solid grey;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 20%;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .content-right {
+            height: 130px;
+            width: 100%;
+
+            .up {
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            .down {
+                width: 80%;
+                font-size: 13px;
+                padding-top: 5px;
+                text-align: justify;
+            }
+        }
+    }
+
+    .price {
+
+        .numeric-format {
+            font-weight: 600;
+        }
+    }
+}

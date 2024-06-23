@@ -36,15 +36,25 @@ class DetailDoctor extends Component {
 
     }
 
+    formatDescription(description) {
+        return description.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+                {line}
+                <br />
+            </React.Fragment>
+        ));
+    }
+
     render() {
-        console.log('check state: ', this.state);
-        let { language } = this.props
+        // console.log('check state: ', this.state);
+        let { language } = this.props;
         let { detailDoctor, currentDoctorId } = this.state;
         let nameVi = '', nameEn = '';
         if (detailDoctor && detailDoctor.positionData) {
             nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`;
             nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;
         }
+
         return (
             <React.Fragment>
                 <HomeHeader isShowBanner={false} />
@@ -62,7 +72,7 @@ class DetailDoctor extends Component {
                             <div className='down'>
                                 {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.description &&
                                     <span>
-                                        {detailDoctor.Markdown.description}
+                                        {this.formatDescription(detailDoctor.Markdown.description)}
                                     </span>
                                 }
                             </div>
