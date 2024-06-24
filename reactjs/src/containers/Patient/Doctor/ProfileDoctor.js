@@ -69,7 +69,10 @@ class ProfileDoctor extends Component {
 
             return (
                 <>
-                    <div>{time} - {date}</div>
+                    <div>{date}<br /> {time} </div>
+                    <div className='mt-4'>
+                        <i><FormattedMessage id='patient.booking-modal.booking-free' /></i>
+                    </div>
                 </>
             )
         }
@@ -116,7 +119,7 @@ class ProfileDoctor extends Component {
                     </div>
                 </div>
                 <div className='price'>
-                    Gia kham:
+                    <FormattedMessage id='patient.booking-modal.examination-fee' />
                     {
                         dataProfile?.Doctor_Info && (
                             <NumericFormat

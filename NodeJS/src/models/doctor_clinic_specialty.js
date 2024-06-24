@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             allowNull: false
         },
-        doctorId: DataTypes.INTEGER,
-        clinicId: DataTypes.INTEGER,
-        specialtyId: DataTypes.INTEGER,
+        doctorId: DataTypes.UUID,
+        clinicId: DataTypes.UUID,
+        specialtyId: DataTypes.UUID,
     }, {
         sequelize,
         modelName: 'Doctor_Clinic_Specialty',

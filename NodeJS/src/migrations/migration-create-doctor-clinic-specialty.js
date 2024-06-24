@@ -10,13 +10,13 @@ module.exports = {
                 defaultValue: Sequelize.UUIDV4
             },
             doctorId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.UUID
             },
             clinicId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.UUID
             },
             specialtyId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.UUID
             },
             createdAt: {
                 allowNull: false,
