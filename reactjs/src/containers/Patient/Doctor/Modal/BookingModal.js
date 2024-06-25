@@ -5,6 +5,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './BookingModal.scss'
 import ProfileDoctor from '../ProfileDoctor';
 import _ from 'lodash';
+import moment from 'moment';
 import DatePicker from '../../../../components/Input/DatePicker';
 import * as actions from '../../../../store/actions';
 import { LANGUAGES } from '../../../../utils';
@@ -98,9 +99,43 @@ class BookingModal extends Component {
         })
     }
 
+    capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    buildTimeBooking = (dataTime) => {
+        let { language } = this.props;
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let time = language === LANGUAGES.VI
+                ? dataTime.timeTypeData.valueVi
+                : dataTime.timeTypeData.valueEn;
+
+            let date = language === LANGUAGES.VI
+                ? this.capitalizeFirstLetter(moment.unix(+dataTime.date / 1000).format('dddd - DD/MM/YYYY'))
+                : moment.unix(+dataTime.date / 1000).locale('en').format('ddd - MM/DD/YYYY');
+
+            return `${date}&ensp;(${time})`;
+        }
+        return ``;
+    }
+
+    buildDoctorName = (dataTime) => {
+        let { language } = this.props;
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let name = language === LANGUAGES.VI
+                ? `${dataTime.doctorData.lastName} ${dataTime.doctorData.firstName}`
+                : `${dataTime.doctorData.firstName} ${dataTime.doctorData.lastName}`;
+
+            return name;
+        }
+        return ``;
+    }
+
     handleConfirmBooking = async () => {
         //validate input
         let date = new Date(this.state.birthday).getTime();
+        let timeString = this.buildTimeBooking(this.props.dataTime);
+        let doctorName = this.buildDoctorName(this.props.dataTime);
 
         let res = await postPatientBookAppointment({
             fullName: this.state.fullName,
@@ -111,7 +146,10 @@ class BookingModal extends Component {
             address: this.state.address,
             reason: this.state.reason,
             doctorId: this.state.doctorId,
-            timeType: this.state.timeType
+            timeType: this.state.timeType,
+            language: this.props.language,
+            timeString: timeString,
+            doctorName: doctorName
         })
 
         if (res && res.errCode === 0) {

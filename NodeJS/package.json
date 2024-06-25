@@ -25,6 +25,7 @@
     "express": "^4.19.2",
     "lodash": "^4.17.21",
     "mysql2": "^3.9.7",
+    "nodemailer": "^6.9.14",
     "sequelize": "^6.37.3",
     "uuid": "^9.0.1"
   },
