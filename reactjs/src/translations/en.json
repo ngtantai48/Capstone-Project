@@ -62,7 +62,8 @@
     },
     "homepage": {
         "outstanding-doctor": "Last week's featured doctor",
-        "see-more": "See More"
+        "see-more": "See More",
+        "popular-specialties": "Popular specialties"
     },
     "detail-doctor": {
         "title": "Create more information for doctors",
