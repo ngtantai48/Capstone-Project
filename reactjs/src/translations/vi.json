@@ -83,7 +83,9 @@
         "note": "Ghi chú",
         "select-price": "Chọn giá khám",
         "select-payment": "Chọn phương thức thanh toán",
-        "select-province": "Chọn tỉnh thành"
+        "select-province": "Chọn tỉnh thành",
+        "select-specialty": "Chọn chuyên khoa",
+        "select-clinic": "Chọn phòng khám"
     },
     "manage-schedule": {
         "title": "Quản lí kế hoạch khám bệnh của bác sĩ",

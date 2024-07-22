@@ -72,7 +72,8 @@ let saveDetailInfoDoctor = (inputData) => {
                 'selectedProvince',
                 'nameClinic',
                 'addressClinic',
-                'note'
+                'note',
+                'specialtyId'
             ];
 
             for (let field of requiredFields) {
@@ -124,6 +125,8 @@ let saveDetailInfoDoctor = (inputData) => {
                 doctorInfo.nameClinic = inputData.nameClinic;
                 doctorInfo.addressClinic = inputData.addressClinic;
                 doctorInfo.note = inputData.note;
+                doctorInfo.specialtyId = inputData.specialtyId;
+                doctorInfo.clinicId = inputData.clinicId;
 
                 await doctorInfo.save()
             } else {
@@ -136,6 +139,8 @@ let saveDetailInfoDoctor = (inputData) => {
                     nameClinic: inputData.nameClinic,
                     addressClinic: inputData.addressClinic,
                     note: inputData.note,
+                    specialtyId: inputData.specialtyId,
+                    clinicId: inputData.clinicId,
                 })
             }
 

@@ -83,7 +83,9 @@
         "note": "Note",
         "select-price": "Select price",
         "select-payment": "Select payment",
-        "select-province": "Select province"
+        "select-province": "Select province",
+        "select-specialty": "Select specialty",
+        "select-clinic": "Select clinic"
     },
     "manage-schedule": {
         "title": "Manage doctor's examination plan",
