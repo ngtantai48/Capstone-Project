@@ -1,15 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .detail-specialty-container {
+    font-family: Montserrat, sans-serif !important;
+
+    .description-specialty {
+        margin: 30px 250px;
+    }
 
     .detail-specialty-body {
-        margin: 0 300px;
-
-        .description-specialty {
-            margin-top: 30px;
-        }
+        padding: 0 250px;
+        background: #eeeeee;
 
         .search-sp-doctor {
             width: 15%;
-            margin: 10px 0 30px 0;
+            padding-top: 20px;
         }
 
         .each-doctor {
@@ -22,7 +26,6 @@
             background-color: #fff;
             box-shadow: 0 1px 6px #20212447;
             border-radius: 8px;
-            margin-bottom: 40px;
 
             .dt-content-left {
                 width: 50%;

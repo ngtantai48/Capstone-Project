@@ -7,6 +7,7 @@ import { getProfileDoctorById } from '../../../services/userService';
 import { NumericFormat } from 'react-number-format';
 import _ from 'lodash'
 import moment from 'moment';
+import { Link } from 'react-router-dom'
 
 class ProfileDoctor extends Component {
     constructor(props) {
@@ -41,6 +42,10 @@ class ProfileDoctor extends Component {
         }
         if (prevProps.doctorId !== doctorId) {
             // this.getInfoDoctor(this.props.doctorId)
+            let data = await this.getInfoDoctor(this.props.doctorId);
+            this.setState({
+                dataProfile: data,
+            });
         }
     }
 
@@ -81,7 +86,9 @@ class ProfileDoctor extends Component {
 
     render() {
         let { dataProfile } = this.state;
-        let { language, isShowDescriptionDoctor, dataTime } = this.props;
+        let { language, isShowDescriptionDoctor,
+            dataTime, isShowLinkDetail, isShowPrice, doctorId
+        } = this.props;
 
         let nameVi = '', nameEn = '';
         if (dataProfile && dataProfile.positionData) {
@@ -118,26 +125,37 @@ class ProfileDoctor extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='price'>
-                    <FormattedMessage id='patient.booking-modal.examination-fee' />
-                    {
-                        dataProfile?.Doctor_Info && (
-                            <NumericFormat
-                                className='numeric-format'
-                                value={
-                                    language === LANGUAGES.VI
-                                        ? dataProfile.Doctor_Info.priceTypeData.valueVi
-                                        : language === LANGUAGES.EN
-                                            ? dataProfile.Doctor_Info.priceTypeData.valueEn
-                                            : ''
-                                }
-                                displayType="text"
-                                thousandSeparator=","
-                                suffix={language === LANGUAGES.VI ? ' VND' : ' $'}
-                            />
-                        )
-                    }
-                </div>
+
+                {isShowLinkDetail === true &&
+                    <div className='view-detail-doctor ps-4'>
+                        <Link to={`/detail-doctor/${doctorId}`} style={{ 'text-decoration': 'none' }}>
+                            Xem them
+                        </Link>
+                    </div>
+                }
+
+                {isShowPrice === true &&
+                    <div className='price'>
+                        <FormattedMessage id='patient.booking-modal.examination-fee' />
+                        {
+                            dataProfile?.Doctor_Info && (
+                                <NumericFormat
+                                    className='numeric-format'
+                                    value={
+                                        language === LANGUAGES.VI
+                                            ? dataProfile.Doctor_Info.priceTypeData.valueVi
+                                            : language === LANGUAGES.EN
+                                                ? dataProfile.Doctor_Info.priceTypeData.valueEn
+                                                : ''
+                                    }
+                                    displayType="text"
+                                    thousandSeparator=","
+                                    suffix={language === LANGUAGES.VI ? ' VND' : ' $'}
+                                />
+                            )
+                        }
+                    </div>
+                }
             </div>
         );
     }
