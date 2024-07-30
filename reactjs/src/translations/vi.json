@@ -93,8 +93,22 @@
         "choose-date": "Chọn ngày",
         "save": "Lưu kế hoạch"
     },
+    "manage-specialty": {
+        "title": "Quản lí chuyên khoa",
+        "sp-name": "Tên chuyên khoa",
+        "sp-img": "Ảnh chuyên khoa",
+        "save": "Lưu"
+    },
+    "manage-clinic": {
+        "title": "Quản lí phòng khám",
+        "clinic-name": "Tên phòng khám",
+        "clinic-address": "Địa chỉ phòng khám",
+        "clinic-img": "Ảnh phòng khám",
+        "save": "Lưu"
+    },
     "patient": {
         "detail-doctor": {
+            "see-more": "Xem thêm",
             "schedule": "Lịch khám",
             "no-schedule": "Bác sĩ không có lịch hẹn khám trong thời gian này !",
             "choose": "Chọn ",

@@ -129,7 +129,7 @@ class ProfileDoctor extends Component {
                 {isShowLinkDetail === true &&
                     <div className='view-detail-doctor ps-4'>
                         <Link to={`/detail-doctor/${doctorId}`} style={{ 'text-decoration': 'none' }}>
-                            Xem them
+                        <FormattedMessage id='patient.detail-doctor.see-more' />
                         </Link>
                     </div>
                 }

@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl'
 import { LANGUAGES, CommonUtils } from '../../../utils';
-import './ManageSpecialty.scss';
+import './ManageClinic.scss';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
-import { createNewSpecialty } from '../../../services/userService';
+import { createNewClinic } from '../../../services/userService';
 import { toast } from 'react-toastify';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-class ManageSpecialty extends Component {
+class ManageClinic extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
+            address: '',
             imageBase64: '',
             descriptionHTML: '',
             descriptionMarkdown: '',
@@ -58,35 +59,42 @@ class ManageSpecialty extends Component {
         }
     }
 
-    handleSaveNewSpecialty = async () => {
-        let res = await createNewSpecialty(this.state);
+    handleSaveNewClinic = async () => {
+        console.log('check state: ', this.state);
+        let res = await createNewClinic(this.state);
+
         if (res && res.errCode === 0) {
-            toast.success('Add new specialty success!');
+            toast.success('Add new clinic success!');
             this.setState({
                 name: '',
-                imageBase64: '',
+                address: '',
                 descriptionHTML: '',
                 descriptionMarkdown: '',
+                imageBase64: ''
             })
         } else {
-            toast.error('Add new specialty failed!')
+            toast.error('Add new clinic failed!')
             console.log('check res: ', res);
         }
     }
 
     render() {
-        let { name, descriptionMarkdown } = this.state;
+        let { name, descriptionMarkdown, address } = this.state;
 
         return (
             <div className='manage-specialty-container'>
-                <div className='ms-title'><FormattedMessage id='manage-specialty.title' /></div>
+                <div className='ms-title'><FormattedMessage id='manage-clinic.title' /></div>
                 <div className='add-new-specialty row'>
-                    <div className='col-6 form-group'>
-                        <label><FormattedMessage id='manage-specialty.sp-name' /></label>
+                    <div className='col-4 form-group'>
+                        <label><FormattedMessage id='manage-clinic.clinic-name' /></label>
                         <input className='form-control' type='text' value={name} onChange={(event) => this.handleOnChangeInput(event, 'name')}></input>
                     </div>
-                    <div className='col-6 form-group'>
-                        <label><FormattedMessage id='manage-specialty.sp-img' /></label>
+                    <div className='col-4 form-group'>
+                        <label><FormattedMessage id='manage-clinic.clinic-address' /></label>
+                        <input className='form-control' type='text' value={address} onChange={(event) => this.handleOnChangeInput(event, 'address')}></input>
+                    </div>
+                    <div className='col-4 form-group'>
+                        <label><FormattedMessage id='manage-clinic.clinic-img' /></label>
                         <input className='form-control' type='file' accept="image/*" onChange={(event) => this.handleOnChangeImage(event)}></input>
                     </div>
                     <div className='col-12 mt-5'>
@@ -98,8 +106,8 @@ class ManageSpecialty extends Component {
                         />
                     </div>
                     <div className='col-12'>
-                        <button className='btn-save-specialty btn btn-primary my-4' onClick={() => this.handleSaveNewSpecialty()}>
-                        <FormattedMessage id='manage-specialty.save' />
+                        <button className='btn-save-specialty btn btn-primary my-4' onClick={() => this.handleSaveNewClinic()}>
+                            <FormattedMessage id='manage-clinic.save' />
                         </button>
                     </div>
                 </div>
@@ -121,4 +129,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSpecialty);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageClinic);

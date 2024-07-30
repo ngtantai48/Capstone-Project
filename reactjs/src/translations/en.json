@@ -93,8 +93,22 @@
         "choose-date": "Choose date",
         "save": "Save plan"
     },
+    "manage-specialty": {
+        "title": "Manage Specialties",
+        "sp-name": "Specialty's name",
+        "sp-img": "Specialty's image",
+        "save": "Save"
+    },
+    "manage-clinic": {
+        "title": "Manage Clinics",
+        "clinic-name": "Clinic's name",
+        "clinic-address": "Clinic's address",
+        "clinic-img": "Clinic's image",
+        "save": "Save"
+    },
     "patient": {
         "detail-doctor": {
+            "see-more": "See More",
             "schedule": "Schedules",
             "no-schedule": "The doctor does not have appointments available at this time !",
             "choose": "Choose ",
