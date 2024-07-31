@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
                 targetKey: 'id',
                 as: 'doctorData'
             })
-
         }
     }
     Schedule.init({

@@ -1,0 +1,30 @@
+.manage-patient-container {
+    .m-p-title {
+        text-transform: uppercase;
+        margin: 30px 0;
+        font-weight: 600;
+        font-size: 20px;
+        text-align: center;
+        color: #0071ba;
+    }
+
+    .manage-patient-body {
+        margin: 0 200px;
+
+        .table-manage-patient {
+
+            table,
+            th,
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            th,
+            td {
+                padding: 5px;
+                text-align: left;
+            }
+        }
+    }
+}

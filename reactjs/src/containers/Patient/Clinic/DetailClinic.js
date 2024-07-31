@@ -79,7 +79,7 @@ class DefaultClass extends Component {
                         </>
                     }
                 </div>
-                <div className='detail-specialty-body py-2'>
+                <div className='detail-specialty-body pt-2 pb-2'>
                     {arrDoctorId && arrDoctorId.length > 0 && arrDoctorId.map((item, index) => {
                         return (
                             <div className='each-doctor' key={index}>

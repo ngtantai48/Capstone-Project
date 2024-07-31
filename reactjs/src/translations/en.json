@@ -26,8 +26,8 @@
             "user": "Users System",
             "manage-doctor": "Manage Doctors",
             "manage-admin": "Manage Admins",
-            "crud": "CRUD user",
-            "crud-redux": "CRUD Redux",
+            "crud": "Manage User",
+            "crud-redux": "Manage User with Redux",
             "clinic": "Clinics",
             "manage-clinic": "Manage Clinics",
             "specialty": "Specialties",
@@ -36,7 +36,8 @@
             "manage-handbook": "Manage Handbook"
         },
         "doctor": {
-            "manage-schedule": "Manage Doctor's schedule"
+            "manage-schedule": "Manage Doctor's schedule",
+            "manage-patient": "Management of medical examination patients"
         }
     },
     "manage-user": {
@@ -89,6 +90,7 @@
     },
     "manage-schedule": {
         "title": "Manage doctor's examination plan",
+        "doctor-name": "Name's Doctor",
         "choose-doctor": "Choose Doctor",
         "choose-date": "Choose date",
         "save": "Save plan"

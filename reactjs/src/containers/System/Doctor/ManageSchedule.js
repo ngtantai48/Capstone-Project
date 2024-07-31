@@ -101,6 +101,7 @@ class ManageSchedule extends Component {
 
     handleSaveSchedule = async () => {
         let { rangeTime, selectedDoctor, currentDate } = this.state;
+        let { userInfo } = this.props
         let result = [];
 
         if (selectedDoctor && _.isEmpty(selectedDoctor)) {
@@ -128,7 +129,9 @@ class ManageSchedule extends Component {
             if (selectedTime && selectedTime.length > 0) {
                 selectedTime.map((schedule) => {
                     let object = {}
-                    object.doctorId = selectedDoctor.value;
+                    // object.doctorId = selectedDoctor.value;
+                    // object.doctorId = userInfo.id;
+                    object.doctorId = (userInfo.roleId === 'R1') ? selectedDoctor.value : userInfo.id;
                     object.date = formattedDate;
                     object.timeType = schedule.keyMap;
                     result.push(object);
@@ -142,7 +145,9 @@ class ManageSchedule extends Component {
 
         let res = await saveBulkScheduleDoctor({
             arrSchedule: result,
-            doctorId: selectedDoctor.value,
+            // doctorId: selectedDoctor.value,
+            // doctorId: userInfo.id,
+            doctorId: (userInfo.roleId === 'R1') ? selectedDoctor.value : userInfo.id,
             formattedDate: formattedDate
         });
 
@@ -163,8 +168,11 @@ class ManageSchedule extends Component {
 
     render() {
         let { listDoctors, selectedDoctor, rangeTime } = this.state;
-        let { language } = this.props;
+        let { language, userInfo } = this.props;
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+        let doctorName = language === LANGUAGES.VI ?
+            `${userInfo.lastName} ${userInfo.firstName}` :
+            removeDiacritics(`${userInfo.firstName} ${userInfo.lastName}`);
 
         return (
             <div className='manage-schedule-container'>
@@ -174,13 +182,24 @@ class ManageSchedule extends Component {
                 <div className='container'>
                     <div className='row'>
                         <div className='col-6 form-group'>
-                            <label><FormattedMessage id='manage-schedule.choose-doctor' /></label>
-                            <Select
-                                className='my-2'
-                                value={selectedDoctor}
-                                onChange={this.handleChangeSelect}
-                                options={listDoctors}
-                            />
+                            {userInfo.roleId === 'R1' ? (
+                                <>
+                                    <label><FormattedMessage id='manage-schedule.choose-doctor' /></label>
+                                    <Select
+                                        className='my-2'
+                                        value={selectedDoctor}
+                                        onChange={this.handleChangeSelect}
+                                        options={listDoctors}
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <label><FormattedMessage id='manage-schedule.doctor-name' /></label>
+                                    <span disabled className='form-control mt-2' style={{ background: '#eee' }}>
+                                        {doctorName}
+                                    </span>
+                                </>
+                            )}
                         </div>
                         <div className='col-6 form-group'>
                             <label><FormattedMessage id='manage-schedule.choose-date' /></label>
@@ -219,7 +238,8 @@ const mapStateToProps = (state) => {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
         allDoctors: state.admin.allDoctors,
-        allScheduleTime: state.admin.allScheduleTime
+        allScheduleTime: state.admin.allScheduleTime,
+        userInfo: state.user.userInfo,
     };
 };
 
