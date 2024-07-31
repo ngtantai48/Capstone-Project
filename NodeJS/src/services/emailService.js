@@ -60,6 +60,74 @@ let getBodyHTMLEmail = (dataSend) => {
     return result;
 }
 
+let getBodyHTMLEmailRemedy = (dataSend) => {
+    let result = ''
+    if (dataSend.language === 'vi') {
+        result = `
+            <h3>Xin chào ${dataSend.patientName},</h3>
+            <p>Bạn nhận được email này vì đã thực hiện việc khám/chữa bệnh tại hệ thống của chúng tôi.</p>
+            <p>
+                <i>Thông tin đơn thuốc/ Hóa đơn được gửi trong file đính kèm.</i>
+            </p>
+            
+            <p>Xin chân thành cảm ơn!</p>
+        `
+    }
+
+    if (dataSend.language === 'en') {
+        result = `
+            <h3>Dear ${dataSend.patientName},</h3>
+            <p>You received this email because you have performed medical examination/treatment in our system.</p>
+            <p>
+                <i>Prescription/Invoice information is sent in the attached file.</i><br>
+            </p>
+
+            <p>Sincerely thank!</p>
+        `
+    }
+
+    return result;
+}
+
+let sendAttachment = async (dataSend) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false, // Use `true` for port 465, `false` for all other ports
+                auth: {
+                    user: process.env.EMAIL_APP,
+                    pass: process.env.EMAIL_APP_PASSWORD,
+                },
+            });
+
+            let info = await transporter.sendMail({
+                from: '"Nguyễn Tấn Tài 👻" <taitynguyen123@gmail.com>', // sender address
+                to: dataSend.email, // list of receivers
+                subject: "Kết quả đặt lịch khám bệnh ✔", // Subject line
+                // text: "Hello world?", // plain text body
+                html: getBodyHTMLEmailRemedy(dataSend),
+                attachments: [
+                    {
+                        filename: `remedy-${dataSend.patientId}-${new Date().getTime()}.png`,
+                        content: dataSend.imgBase64.split("base64,")[1],
+                        encoding: 'base64'
+                    }
+                ]
+            });
+
+            resolve({
+                errCode: 0,
+                errMessage: 'OK!'
+            })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
-    sendSimpleEmail: sendSimpleEmail
+    sendSimpleEmail: sendSimpleEmail,
+    sendAttachment: sendAttachment
 }
